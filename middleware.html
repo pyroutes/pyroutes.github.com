@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Middleware &mdash; pyroutes v0.3.0 documentation</title>
+    <link rel="stylesheet" href="static/pyroutes.css" type="text/css" />
+    <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.3.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="static/jquery.js"></script>
+    <script type="text/javascript" src="static/doctools.js"></script>
+    <link rel="top" title="pyroutes v0.3.0 documentation" href="index.html" />
+    <link rel="next" title="Route handling" href="reference/pyroutes.html" />
+    <link rel="prev" title="Deployment" href="deployment.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="reference/pyroutes.html" title="Route handling"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="deployment.html" title="Deployment"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">pyroutes v0.3.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="middleware">
+<span id="id1"></span><h1>Middleware<a class="headerlink" href="#middleware" title="Permalink to this headline">¶</a></h1>
+<p>Middleware is run around each request processing.</p>
+<p>In Python we can display this as:</p>
+<div class="highlight-python"><pre>Outer(Middle(Inner(final_method)))(my param)</pre>
+</div>
+<p>Each layer calls the next with the the same parameters as it
+was called with, and returns the same. This allows us
+to edit requests and responses globally with ease.</p>
+<div class="section" id="adding-middleware">
+<h2>Adding middleware<a class="headerlink" href="#adding-middleware" title="Permalink to this headline">¶</a></h2>
+<p>Adding middleware is done by modifying the project settings.
+See <a class="reference external" href="reference/settings.html#pyroutes-settings"><em>Settings</em></a> for more information about this.</p>
+</div>
+<div class="section" id="creating-your-own">
+<h2>Creating your own<a class="headerlink" href="#creating-your-own" title="Permalink to this headline">¶</a></h2>
+<p>Creating your own middleware is quite easy. Let&#8217;s create
+a simple logging middleware as an example.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="k">class</span> <span class="nc">LoggingMiddleware</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">passthrough</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">FileHandler</span><span class="p">(</span><span class="s">&#39;/tmp/mylog.txt&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">passthrough</span> <span class="o">=</span> <span class="n">passthrough</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;Got request </span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">passthrough</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;Got response </span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">response</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response</span>
+</pre></div>
+</div>
+<p>So, what&#8217;s going on here?</p>
+<p>Every middleware must accept a <tt class="docutils literal"><span class="pre">passthrough</span></tt> parameter. This is the
+next method in the middleware chain (or the handler itself).
+In the <tt class="docutils literal"><span class="pre">__call__</span></tt> method we accept a mandatory <tt class="docutils literal"><span class="pre">request</span></tt> parameter,
+and return the result of the <tt class="docutils literal"><span class="pre">passthrough</span></tt>-method, called with <tt class="docutils literal"><span class="pre">request</span></tt>
+as it&#8217;s parameter.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">Middleware</a><ul>
+<li><a class="reference external" href="#adding-middleware">Adding middleware</a></li>
+<li><a class="reference external" href="#creating-your-own">Creating your own</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="deployment.html"
+                                  title="previous chapter">Deployment</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="reference/pyroutes.html"
+                                  title="next chapter">Route handling</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="sources/middleware.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="reference/pyroutes.html" title="Route handling"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="deployment.html" title="Deployment"
+             >previous</a> |</li>
+        <li><a href="index.html">pyroutes v0.3.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2009-2010, Kristian Klette.
+      Last updated on Nov 16, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.6.
+    </div>
+  </body>
+</html>

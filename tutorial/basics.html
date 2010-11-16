@@ -1,0 +1,271 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Tutorial - Part 1 - The basics &mdash; pyroutes v0.3.0 documentation</title>
+    <link rel="stylesheet" href="../static/pyroutes.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.3.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <link rel="top" title="pyroutes v0.3.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li><a href="../index.html">pyroutes v0.3.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="tutorial-part-1-the-basics">
+<h1>Tutorial - Part 1 - The basics<a class="headerlink" href="#tutorial-part-1-the-basics" title="Permalink to this headline">¶</a></h1>
+<p>This tutorial will take you through the basics of creating a pyroutes-based web
+application.</p>
+<p>Let&#8217;s start by creating the enviroment for developing our application.</p>
+<div class="highlight-python"><pre>mkdir tutorial
+cd tutorial</pre>
+</div>
+<div class="section" id="application-entrypoint-and-development-server">
+<h2>Application entrypoint and development server<a class="headerlink" href="#application-entrypoint-and-development-server" title="Permalink to this headline">¶</a></h2>
+<p>The first thing we need is something to launch our application. We&#8217;ll create a
+wsgi-file which can be used by <cite>mod-wsgi</cite>, but also include a basic webserver
+for testing our code without launching apache or another large webserver.</p>
+<p>Create a file called <cite>server.wsgi</cite>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">wsgiref.simple_server</span> <span class="kn">import</span> <span class="n">make_server</span>
+<span class="kn">from</span> <span class="nn">pyroutes</span> <span class="kn">import</span> <span class="n">application</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">make_server</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="mi">8080</span><span class="p">,</span> <span class="n">application</span><span class="p">)</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>You may now run this file as using python and it will launch our development
+server on your host on port 8080.  If your developing locally you can launch
+your browser and go to <a class="reference external" href="http://localhost:8080">http://localhost:8080</a> and you&#8217;ll get a 404-page
+complaining about no handler found. If you&#8217;re developing on a server, replace
+localhost with the hostname or ip of the server.</p>
+<p>Note that the server will not reload itself as you develop more code, so you&#8217;ll
+either have to restart the server each time you want to check your code, or
+deploy your application behind apache. See <a class="reference external" href="../deployment/apache.html#deployment-apache"><em>Deploying pyroutes with Apache2.2</em></a> for
+information about deployment.</p>
+</div>
+<div class="section" id="hello-world">
+<h2>Hello world<a class="headerlink" href="#hello-world" title="Permalink to this headline">¶</a></h2>
+<p>We can now start developing something to show to the user. Let&#8217;s start by
+creating a simple Hello World-app.</p>
+<p>Create a file called hello.py:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pyroutes</span> <span class="kn">import</span> <span class="n">route</span>
+<span class="kn">from</span> <span class="nn">pyroutes.http.response</span> <span class="kn">import</span> <span class="n">Response</span>
+
+<span class="nd">@route</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">say_hello</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="s">&#39;Hello World&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We start by including the route decorator. This is the way that pyroutes maps
+paths to handler functions.  We also include the Response-class from
+<a title="" class="reference external" href="../reference/response.html#module-pyroutes.http.response"><tt class="xref docutils literal"><span class="pre">pyroutes.http.response</span></tt></a>, which is a helper-class for returning a response
+to the user.</p>
+<p>We define a method called <cite>say_hello</cite>, all request handlers get two parameters
+from pyroutes. The first argument is the WSGI-enviroment-instace for that
+request, and the second is a dictionary with everything posted to the request
+as either a <cite>GET</cite> or <cite>POST</cite> variabel. The method is decorated with the <cite>route</cite>
+decorator with the wanted path as the only argument, in our case <cite>/</cite>. The
+method only returns a simple <cite>Response</cite>-instance with &#8216;Hello World&#8217; as content.
+The <cite>Response</cite>-class defaults to send <cite>text/html</cite> as <cite>Content-Type</cite> and <cite>200
+OK</cite> as HTTP status code.</p>
+<p>Here is a bit of a gotcha, to have this enabled by our application, it must be
+included at compiletime (not really, but let&#8217;s assume that for the purpose of
+this intro tutorial). So we&#8217;ll have to import our hello-script in
+<cite>server.wsgi</cite>. We do this simply by adding <cite>import hello</cite> below our other
+imports.</p>
+<p>If you restart your development server and point your browser to
+<a class="reference external" href="http://localhost:8080/">http://localhost:8080/</a> you should see &#8220;Hello World&#8221; on your screen.</p>
+<p>Congratulation, you&#8217;ve just created your first pyroutes based web application!</p>
+</div>
+<div class="section" id="templating">
+<h2>Templating<a class="headerlink" href="#templating" title="Permalink to this headline">¶</a></h2>
+<p>Web development without templates is really not a good idea, so pyroutes
+includes a xml-based templating system called xml-template.  It&#8217;s quite
+different from most templating systems as is solely based upon XML, and does
+not include any logic functionality in the template-code, but you&#8217;ll get used
+to that after a while, I promise.</p>
+<p>pyroutes is aimed at small web applications, and most of the application made
+only make use of a base-template for the XHTML-boilerplate code, css,
+javascript and all that jazz, and a template inside that for content. So
+pyroutes includes a helper for doing exactly that using xml-template.</p>
+<p>Let&#8217;s dive into it! Create a file called <cite>base.xml</cite></p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot; ?&gt;</span>
+<span class="cp">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.1//EN&quot;</span>
+<span class="cp">&quot;http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd&quot;&gt;</span>
+
+ <span class="nt">&lt;html</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.w3.org/1999/xhtml&quot;</span> <span class="na">xmlns:t=</span><span class="s">&quot;http://template.sesse.net/&quot;</span> <span class="na">xml:lang=</span><span class="s">&quot;en&quot;</span><span class="nt">&gt;</span>
+   <span class="nt">&lt;head&gt;</span>
+     <span class="nt">&lt;title&gt;</span>pyroutes demo<span class="nt">&lt;/title&gt;</span>
+   <span class="nt">&lt;/head&gt;</span>
+
+    <span class="nt">&lt;body&gt;</span>
+      <span class="nt">&lt;h1&gt;</span>pyroutes demo<span class="nt">&lt;/h1&gt;</span>
+      <span class="nt">&lt;t:contents</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+  <span class="nt">&lt;/html&gt;</span>
+</pre></div>
+</div>
+<p>As you can see this is a pretty basic XHTML file. There is one special element
+here though; the <cite>&lt;t:contents /&gt;</cite>-tag. This must be available in all base
+templates pyroutes uses, as it will be replaced with the content.</p>
+<p>So let&#8217;s create a content template. Create a file called <cite>content.xml</cite></p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;t:dummy</span> <span class="na">xmlns:t=</span><span class="s">&quot;http://template.sesse.net/&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;p</span> <span class="na">t:id=</span><span class="s">&quot;message&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/t:dummy&gt;</span>
+</pre></div>
+</div>
+<p>As each template file must be valid XML we wrap the contents in a dummy-node.
+You might notice that we&#8217;ve added a parameter to the <cite>&lt;p&gt;</cite>-tag, <cite>t:id</cite>. This is
+the way we identify parts of the XHTML from the python code.</p>
+<p>Now, let us create a request handler to use the templates.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pyroutes</span> <span class="kn">import</span> <span class="n">route</span>
+<span class="kn">from</span> <span class="nn">pyroutes.http.response</span> <span class="kn">import</span> <span class="n">Response</span>
+<span class="kn">from</span> <span class="nn">pyroutes.template</span> <span class="kn">import</span> <span class="n">TemplateRenderer</span>
+
+<span class="n">tmpl_renderer</span> <span class="o">=</span> <span class="n">TemplateRenderer</span><span class="p">(</span><span class="s">&#39;base.xml&#39;</span><span class="p">)</span>
+
+<span class="nd">@route</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">templated_handler</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">template_data</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;#message&#39;</span><span class="p">:</span> <span class="s">&#39;Hello World&#39;</span><span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">tmpl_renderer</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s">&#39;content.xml&#39;</span><span class="p">,</span> <span class="n">template_data</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>As you can see we imported <cite>TemplateRenderer</cite> from <tt class="xref docutils literal"><span class="pre">pyroutes.template</span></tt>,
+and initialized it with our base template as the only parameter. This will make
+the <cite>TemplateRenderer</cite>-instance render what it&#8217;s given and replace the
+<cite>&lt;t:contents /&gt;</cite>-tag in the base template with it.</p>
+<p>To <cite>TemplateRenderer</cite>&#8216;s <cite>render</cite>-method we in addition to the template we want
+to render inside our base template, pass a dictionary with the data the
+content-template should use. The syntax is pretty simple</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&#39;#message&#39;</span><span class="p">:</span> <span class="s">&#39;foobar&#39;</span><span class="p">,</span> <span class="c"># Replaces the content of the tag with t:id=&#39;message&#39; with &#39;foobar&#39;</span>
+    <span class="s">&#39;#message/class&#39;</span><span class="p">:</span> <span class="s">&#39;message&#39;</span><span class="p">,</span> <span class="c"># Replaces or adds the class-attribute to the tag with t:id=&#39;message&#39; to &#39;message&#39;</span>
+    <span class="s">&#39;msg&#39;</span><span class="p">:</span> <span class="s">&#39;hello&#39;</span> <span class="c"># Replaces any &lt;t:msg /&gt;-tag with &#39;hello&#39; in the template.</span>
+     <span class="p">}</span>
+</pre></div>
+</div>
+<p>One thing most people struggle with when starting to use xml-template is
+creating lists of things. Here is how to do that.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;ul</span> <span class="na">t:id=</span><span class="s">&quot;entries&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;li</span> <span class="na">t:id=</span><span class="s">&quot;entry&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&#39;#entries&#39;</span><span class="p">:</span> <span class="p">[</span>
+                  <span class="p">{</span><span class="s">&#39;#entry&#39;</span><span class="p">:</span> <span class="s">&#39;entry 1&#39;</span><span class="p">},</span>
+                  <span class="p">{</span><span class="s">&#39;#entry&#39;</span><span class="p">:</span> <span class="s">&#39;entry 2&#39;</span><span class="p">},</span>
+                  <span class="p">{</span><span class="s">&#39;#entry&#39;</span><span class="p">:</span> <span class="s">&#39;entry 3&#39;</span><span class="p">},</span>
+                <span class="p">]</span>
+      <span class="p">}</span>
+</pre></div>
+</div>
+<p>For more xml-template examples see <a class="reference external" href="http://bzr.sesse.net/xml-template/">http://bzr.sesse.net/xml-template/</a>.</p>
+</div>
+<div class="section" id="getting-input-from-the-user">
+<h2>Getting input from the user<a class="headerlink" href="#getting-input-from-the-user" title="Permalink to this headline">¶</a></h2>
+<p>One common operation in web applications is getting input from the user, pyroutes handles
+this by providing every route with a <tt class="xref docutils literal"><span class="pre">pyroutes.http.request.Request</span></tt>-object.
+This object provides you, among other things, a <cite>POST</cite> and a <cite>GET</cite> dictionary containing
+the values from the user.</p>
+<p>Here is a simple example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@route</span><span class="p">(</span><span class="s">&#39;/sayhello&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">sayhello</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">name</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="s">&#39;Hello </span><span class="si">%s</span><span class="s">!&#39;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="s">&#39;I don</span><span class="se">\&#39;</span><span class="s">t know your name yet&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>That should get you started in your development of a pyroutes powered application. Good luck!</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">Tutorial - Part 1 - The basics</a><ul>
+<li><a class="reference external" href="#application-entrypoint-and-development-server">Application entrypoint and development server</a></li>
+<li><a class="reference external" href="#hello-world">Hello world</a></li>
+<li><a class="reference external" href="#templating">Templating</a></li>
+<li><a class="reference external" href="#getting-input-from-the-user">Getting input from the user</a></li>
+</ul>
+</li>
+</ul>
+
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../sources/tutorial/basics.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">pyroutes v0.3.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2009-2010, Kristian Klette.
+      Last updated on Nov 16, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.6.
+    </div>
+  </body>
+</html>

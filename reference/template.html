@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Templates &mdash; pyroutes v0.3.0 documentation</title>
+    <link rel="stylesheet" href="../static/pyroutes.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.3.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <link rel="top" title="pyroutes v0.3.0 documentation" href="../index.html" />
+    <link rel="next" title="Utilities" href="utils.html" />
+    <link rel="prev" title="Request and response objects" href="response.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="utils.html" title="Utilities"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="response.html" title="Request and response objects"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">pyroutes v0.3.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-pyroutes.templates">
+<h1>Templates<a class="headerlink" href="#module-pyroutes.templates" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt>
+<tt class="descname">TemplateRenderer([base_template=None, inclusion_param=None,</tt></dt>
+<dt>
+<tt class="descname">template_dir=None])</tt></dt>
+<dd><p>Creates a TemplateRenderer for doing single-inheritance rendering
+with XML-Template.</p>
+<p>Takes three parameters.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">base_template</span></tt>: The base template. Usually with the html headers, css, etc.</li>
+<li><tt class="docutils literal"><span class="pre">inclusion_param</span></tt>: The &lt;t:id=&#8221;..&#8221;/&gt; id which will be replaced with the content of the child template.</li>
+<li><tt class="docutils literal"><span class="pre">template_dir</span></tt>: Override the <tt class="docutils literal"><span class="pre">TEMPLATE_DIR</span></tt> setting from pyroutes.settings.</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyroutes.templates.render">
+<tt class="descclassname">pyroutes.templates.</tt><tt class="descname">render</tt><big>(</big><em>template</em>, <em>data</em><big>)</big><a class="headerlink" href="#pyroutes.templates.render" title="Permalink to this definition">¶</a></dt>
+<dd>Renders a template and returns the result as a string.
+Takes two parameters, the child template to be rendered,
+and the data passed to the templates.</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="response.html"
+                                  title="previous chapter">Request and response objects</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="utils.html"
+                                  title="next chapter">Utilities</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../sources/reference/template.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="utils.html" title="Utilities"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="response.html" title="Request and response objects"
+             >previous</a> |</li>
+        <li><a href="../index.html">pyroutes v0.3.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2009-2010, Kristian Klette.
+      Last updated on Nov 16, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.6.
+    </div>
+  </body>
+</html>

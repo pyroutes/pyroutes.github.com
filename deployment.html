@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Deployment &mdash; pyroutes v0.3.0 documentation</title>
+    <link rel="stylesheet" href="static/pyroutes.css" type="text/css" />
+    <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.3.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="static/jquery.js"></script>
+    <script type="text/javascript" src="static/doctools.js"></script>
+    <link rel="top" title="pyroutes v0.3.0 documentation" href="index.html" />
+    <link rel="next" title="Middleware" href="middleware.html" />
+    <link rel="prev" title="Let’s do it! (aka Quickstart)" href="usage.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="middleware.html" title="Middleware"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="usage.html" title="Let’s do it! (aka Quickstart)"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">pyroutes v0.3.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="deployment">
+<h1>Deployment<a class="headerlink" href="#deployment" title="Permalink to this headline">¶</a></h1>
+<p>As Pyroutes is a WSGI-based framework, we have several methods of deploying our
+applications. The most common is to use mod_wsgi and Apache.</p>
+<div class="section" id="apache2-2-and-mod-wsgi">
+<h2>Apache2.2 and mod_wsgi<a class="headerlink" href="#apache2-2-and-mod-wsgi" title="Permalink to this headline">¶</a></h2>
+<p>As this web framework is based on WSGI, we&#8217;ll use mod_wsgi as our way of
+deploying our project behind the Apache webserver.</p>
+<p>Let&#8217;s start by setting up our base requirements (assuming you have pyroutes installed).</p>
+<p><strong>Debian based systems</strong>:</p>
+<div class="highlight-python"><pre>sudo aptitude install apache2 libapache2-modwsgi
+sudo a2enmod wsgi
+sudo /etc/init.d/apache2 reload</pre>
+</div>
+<p><strong>Other</strong></p>
+<ul>
+<li><p class="first">Install apache from www.apache.com</p>
+</li>
+<li><p class="first">Install mod_wsgi from <a class="reference external" href="http://code.google.com/p/modwsgi">http://code.google.com/p/modwsgi</a></p>
+</li>
+<li><p class="first">Enable mod_wsgi and restart apache (might be different on your platform):</p>
+<div class="highlight-python"><pre>sudo a2enmod wsgi
+sudo apache2ctl restart</pre>
+</div>
+</li>
+</ul>
+<p>Once you have that installed we&#8217;re going to need a <tt class="docutils literal"><span class="pre">VirtualHost</span></tt> for our project.
+Use this configuration as an example. More configuration options are available at mod_wsgi&#8217;s website.:</p>
+<div class="highlight-python"><pre>&lt;VirtualHost *&gt;
+        ServerName example.pyroutes.com
+        ServerAdmin klette@pyroutes.com
+        DocumentRoot /home/klette/dev/myproject/webroot
+
+        WSGIScriptAlias / /home/klette/dev/myproject/handler.py
+&lt;/VirtualHost&gt;</pre>
+</div>
+<p>The most important line here is the <tt class="docutils literal"><span class="pre">WSGIScriptAlias</span></tt> line. In the example we declare that every path under <tt class="docutils literal"><span class="pre">/</span></tt> should
+be handled by that python file. When using <tt class="docutils literal"><span class="pre">pyroutes</span></tt> this is the file where you do:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pyroutes</span> <span class="kn">import</span> <span class="n">application</span>
+</pre></div>
+</div>
+<p>and import all files and modules declaring routes.</p>
+<p>That should be about it, and your project should be running smoothly behind apache.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">Deployment</a><ul>
+<li><a class="reference external" href="#apache2-2-and-mod-wsgi">Apache2.2 and mod_wsgi</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="usage.html"
+                                  title="previous chapter">Let&#8217;s do it! (aka Quickstart)</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="middleware.html"
+                                  title="next chapter">Middleware</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="sources/deployment.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="middleware.html" title="Middleware"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="usage.html" title="Let’s do it! (aka Quickstart)"
+             >previous</a> |</li>
+        <li><a href="index.html">pyroutes v0.3.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2009-2010, Kristian Klette.
+      Last updated on Nov 16, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.6.
+    </div>
+  </body>
+</html>

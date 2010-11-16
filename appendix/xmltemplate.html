@@ -1,0 +1,400 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Introduction to XML::Template &mdash; pyroutes v0.3.0 documentation</title>
+    <link rel="stylesheet" href="../static/pyroutes.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.3.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <link rel="top" title="pyroutes v0.3.0 documentation" href="../index.html" />
+    <link rel="next" title="Changelog" href="../changelog.html" />
+    <link rel="prev" title="Settings" href="../reference/settings.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="../changelog.html" title="Changelog"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../reference/settings.html" title="Settings"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">pyroutes v0.3.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="introduction-to-xml-template">
+<span id="xml-template-intro"></span><h1>Introduction to XML::Template<a class="headerlink" href="#introduction-to-xml-template" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This is shamelessly ripped from <a class="reference external" href="http://bzr.sesse.net/xml-template/doc/intro.txt">http://bzr.sesse.net/xml-template/doc/intro.txt</a>
+and converted to RST. The examples are in Perl, but the syntax is close to
+identical.</p>
+</div>
+<p>XML::Template is a templating system; there are already many others, so if
+you do not like it, look into a different one (its design is inspired by
+at least Template Toolkit and Kid, probably also including elements from
+others). XML::Template is (like Kid or TAL) designed to guarantee that your
+output is well-formed XML, which is a good step on the road to give you
+valid XHTML.</p>
+<p>You can get the latest version of XML::Template with bzr; get bzr from your
+favourite distribution and do:</p>
+<div class="highlight-python"><pre>$ bzr get http://bzr.sesse.net/xml-template/</pre>
+</div>
+<p>to check out the code and this documentation.</p>
+<p>There is a lot to be said about design philosophy, but let&#8217;s first give a
+simple example to give you the feel of how it works. (The example is in Perl,
+but there are also functionally equivalent PHP, Python and Ruby versions;
+ports to other languages would be welcome.)</p>
+<p>Template (simple.xml)</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;</span>
+<span class="cp">&lt;!DOCTYPE</span>
+<span class="cp">  html PUBLIC &quot;-//W3C//DTD XHTML 1.1//EN&quot;</span>
+<span class="cp">  &quot;http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd&quot;&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.w3.org/1999/xhtml&quot;</span> <span class="na">xmlns:t=</span><span class="s">&quot;http://template.sesse.net/&quot;</span> <span class="na">xml:lang=</span><span class="s">&quot;en&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;title</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;p</span> <span class="na">t:id=</span><span class="s">&quot;hello&quot;</span><span class="nt">&gt;</span>This will be replaced.<span class="nt">&lt;/p&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+</div>
+<p>Code (simple.pl)</p>
+<div class="highlight-perl"><div class="highlight"><pre><span class="c1">#! /usr/bin/perl</span>
+<span class="k">use</span> <span class="nn">XML::</span><span class="n">Template</span><span class="p">;</span>
+
+<span class="k">my</span> <span class="nv">$doc</span> <span class="o">=</span> <span class="nn">XML::Template::</span><span class="n">process_file</span><span class="p">(</span><span class="s">&#39;../xml/simple.xml&#39;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;A very basic example&#39;</span><span class="p">,</span>
+    <span class="s">&#39;#hello&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;Hello world!&#39;</span>
+<span class="p">});</span>
+<span class="k">print</span> <span class="nv">$doc</span><span class="o">-&gt;</span><span class="n">toString</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Result</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;</span>
+<span class="cp">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.1//EN&quot; &quot;http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd&quot;&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.w3.org/1999/xhtml&quot;</span> <span class="na">xml:lang=</span><span class="s">&quot;en&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;title&gt;</span>A very basic example<span class="nt">&lt;/title&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;p&gt;</span>Hello world!<span class="nt">&lt;/p&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+</div>
+<p>This is about as simple as it gets, but we&#8217;ve already touched on most of the
+functionality we want or need. A few points are worth commenting on:</p>
+<blockquote>
+<ul class="simple">
+<li>We template by first _selecting_ certain elements (either by tag name, or
+by ID &#8211; the syntax is borrowed from CSS since you probably already know
+it), then _replace_ their contents. (Soon, we&#8217;ll also _clone_ elements.)</li>
+<li>We get a DOM tree out, which we can either print out or do other things
+with (say, style further if XML::Template should not prove enough).
+(Actually, we start with a DOM tree as well, but process_file is a
+shortcut to read in an XML file and parse it into a DOM tree first, since
+that&#8217;s usually what we want.)</li>
+<li>All traces of our templating system have been removed &#8211; there is a flag
+you can give to prohibit this &#8220;cleaning&#8221; in case you don&#8217;t want that.</li>
+</ul>
+</blockquote>
+<p>Note how little syntax we need to do simple things &#8211; XML::Template is
+designed to <em>keep simple things simple</em>, since you want to do simple things
+most of the time. (I don&#8217;t believe in &#8220;lines of code&#8221; as the primary metric
+for API usability in general, though.)</p>
+<p>We move on to another useful operation, cloning.</p>
+<p>Template (clone.xml)</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;</span>
+<span class="cp">&lt;!DOCTYPE</span>
+<span class="cp">  html PUBLIC &quot;-//W3C//DTD XHTML 1.1//EN&quot;</span>
+<span class="cp">  &quot;http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd&quot;&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.w3.org/1999/xhtml&quot;</span> <span class="na">xmlns:t=</span><span class="s">&quot;http://template.sesse.net/&quot;</span> <span class="na">xml:lang=</span><span class="s">&quot;en&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Cloning test<span class="nt">&lt;/title&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+     <span class="nt">&lt;p&gt;</span>My favourite color is <span class="nt">&lt;t:color</span> <span class="nt">/&gt;</span>; I like that very much.
+       All my favourite things:<span class="nt">&lt;/p&gt;</span>
+    <span class="nt">&lt;ul</span> <span class="na">t:id=</span><span class="s">&quot;things&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;li</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/ul&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+</div>
+<p>Code (clone.pl)</p>
+<div class="highlight-perl"><div class="highlight"><pre><span class="c1">#! /usr/bin/perl</span>
+<span class="k">use</span> <span class="nn">XML::</span><span class="n">Template</span><span class="p">;</span>
+
+<span class="k">my</span> <span class="nv">$doc</span> <span class="o">=</span> <span class="nn">XML::Template::</span><span class="n">process_file</span><span class="p">(</span><span class="s">&#39;../xml/clone.xml&#39;</span><span class="p">,</span> <span class="p">{</span>
+      <span class="s">&#39;color&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;blue&#39;</span><span class="p">,</span>
+      <span class="s">&#39;#things&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+              <span class="p">{</span> <span class="s">&#39;li&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;Raindrops on roses&#39;</span> <span class="p">},</span>
+              <span class="p">{</span> <span class="s">&#39;li&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;Whiskers on kittens&#39;</span> <span class="p">},</span>
+              <span class="p">{</span> <span class="s">&#39;li&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;Bright copper kettles&#39;</span> <span class="p">},</span>
+              <span class="p">{</span> <span class="s">&#39;li&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;Warm, woolen mittens&#39;</span><span class="p">}</span>
+      <span class="p">]</span>
+<span class="p">});</span>
+<span class="k">print</span> <span class="nv">$doc</span><span class="o">-&gt;</span><span class="n">toString</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Result</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;</span>
+<span class="cp">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.1//EN&quot; &quot;http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd&quot;&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.w3.org/1999/xhtml&quot;</span> <span class="na">xml:lang=</span><span class="s">&quot;en&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Cloning test<span class="nt">&lt;/title&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+     <span class="nt">&lt;p&gt;</span>My favourite color is blue; I like that very much.
+       All my favourite things:<span class="nt">&lt;/p&gt;</span>
+    <span class="nt">&lt;ul&gt;</span>
+      <span class="nt">&lt;li&gt;</span>Raindrops on roses<span class="nt">&lt;/li&gt;</span>
+
+      <span class="nt">&lt;li&gt;</span>Whiskers on kittens<span class="nt">&lt;/li&gt;</span>
+
+      <span class="nt">&lt;li&gt;</span>Bright copper kettles<span class="nt">&lt;/li&gt;</span>
+
+      <span class="nt">&lt;li&gt;</span>Warm, woolen mittens<span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;/ul&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+</div>
+<p>This isn&#8217;t much harder than the example above; we&#8217;ve done a simple replacement
+of the contents of &lt;t:color&gt; to &#8220;blue&#8221; (and after that just removed the tag;
+any tag you use in the templating namespace will automatically get stripped
+away), and then cloned the contents of our &#8220;things&#8221; bullet list. Note that
+XML::Template automatically recurses after the cloning, since you probably
+don&#8217;t want four identical elements. You can recurse as many times as you&#8217;d like,
+in case you&#8217;d need lists of lists or multiple tables and rows and columns &#8211;
+you don&#8217;t even have to understand what&#8217;s happening to get it to work.</p>
+<p>Note that we did all of this without any logic in the template at all. This
+is completely intentional &#8211; it&#8217;s a bit of an experiment, really, but hopefully
+it will all turn out well. There is no logic in the templating system at all;
+if-s are handled with replacements (or DOM deletions), for-s are handled with
+cloning and expressions are handled by the language you&#8217;re using.</p>
+<p>This means we have introduced all three operations we need (replacement,
+substitution/selection and repeating/cloning), and only need two more features
+before we&#8217;re all done.</p>
+<p>The first one is just a variation on replacement; instead of replacing with
+a string, you can replace with a DOM tree or document. This facilitates simple
+inclusion, since you probably want some header and footer to be the same
+across all your pages. (No example here, you can probably work it out by
+yourself; just send a DOM object instead of a string. There&#8217;s an example in
+the source code distribution if you need it.)</p>
+<p>The second one is also a variation on replacement; sometimes, you want to
+set attributes on elements instead of replacing their contents, and for that,
+we have a small hack:</p>
+<p>Template (clone.xml), repeated for your convenience</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;</span>
+<span class="cp">&lt;!DOCTYPE</span>
+<span class="cp">  html PUBLIC &quot;-//W3C//DTD XHTML 1.1//EN&quot;</span>
+<span class="cp">  &quot;http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd&quot;&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.w3.org/1999/xhtml&quot;</span> <span class="na">xmlns:t=</span><span class="s">&quot;http://template.sesse.net/&quot;</span> <span class="na">xml:lang=</span><span class="s">&quot;en&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Cloning test<span class="nt">&lt;/title&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;p&gt;</span>My favourite color is <span class="nt">&lt;t:color</span> <span class="nt">/&gt;</span>; I like that very much.
+      All my favourite things:<span class="nt">&lt;/p&gt;</span>
+    <span class="nt">&lt;ul</span> <span class="na">t:id=</span><span class="s">&quot;things&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;li</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/ul&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+</div>
+<p>Code (attribute.pl)</p>
+<div class="highlight-perl"><div class="highlight"><pre><span class="c1">#! /usr/bin/perl</span>
+<span class="k">use</span> <span class="nn">XML::</span><span class="n">Template</span><span class="p">;</span>
+
+<span class="k">my</span> <span class="nv">$doc</span> <span class="o">=</span> <span class="nn">XML::Template::</span><span class="n">process_file</span><span class="p">(</span><span class="s">&#39;../xml/clone.xml&#39;</span><span class="p">,</span> <span class="p">{</span>
+      <span class="s">&#39;color&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;red&#39;</span><span class="p">,</span>
+      <span class="s">&#39;#things&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+              <span class="p">{</span> <span class="s">&#39;li&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;Raindrops on roses&#39;</span><span class="p">,</span>    <span class="s">&#39;li/class&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;odd&#39;</span> <span class="p">},</span>
+              <span class="p">{</span> <span class="s">&#39;li&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;Whiskers on kittens&#39;</span><span class="p">,</span>   <span class="s">&#39;li/class&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;even&#39;</span> <span class="p">},</span>
+              <span class="p">{</span> <span class="s">&#39;li&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;Bright copper kettles&#39;</span><span class="p">,</span> <span class="s">&#39;li/class&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;odd&#39;</span> <span class="p">},</span>
+              <span class="p">{</span> <span class="s">&#39;li&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;Warm, woolen mittens&#39;</span><span class="p">,</span>  <span class="s">&#39;li/class&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;even&#39;</span> <span class="p">}</span>
+      <span class="p">]</span>
+<span class="p">});</span>
+<span class="k">print</span> <span class="nv">$doc</span><span class="o">-&gt;</span><span class="n">toString</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Result</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;</span>
+<span class="cp">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.1//EN&quot; &quot;http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd&quot;&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.w3.org/1999/xhtml&quot;</span> <span class="na">xml:lang=</span><span class="s">&quot;en&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Cloning test<span class="nt">&lt;/title&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+     <span class="nt">&lt;p&gt;</span>My favourite color is red; I like that very much.
+       All my favourite things:<span class="nt">&lt;/p&gt;</span>
+    <span class="nt">&lt;ul&gt;</span>
+      <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">&quot;odd&quot;</span><span class="nt">&gt;</span>Raindrops on roses<span class="nt">&lt;/li&gt;</span>
+
+      <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">&quot;even&quot;</span><span class="nt">&gt;</span>Whiskers on kittens<span class="nt">&lt;/li&gt;</span>
+
+      <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">&quot;odd&quot;</span><span class="nt">&gt;</span>Bright copper kettles<span class="nt">&lt;/li&gt;</span>
+
+      <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">&quot;even&quot;</span><span class="nt">&gt;</span>Warm, woolen mittens<span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;/ul&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+</div>
+<p>Naturally, you can&#8217;t put anything else than a simple string into an attribute,
+but it&#8217;s not like this is a big limitation. (There&#8217;s also a shortcut for doing
+stuff like odd/even automatically, but I&#8217;ll leave that for yourself to find out;
+see the attribute2 example.)</p>
+<p>That&#8217;s it for the examples; now let&#8217;s turn to the boring design philosophy.</p>
+<p>The main thoughts behind XML::Template have been, in no particular order:</p>
+<blockquote>
+<ul class="simple">
+<li>Make the simple things simple. (A template should not be much more cumbersome
+to write than if you wrote the page statically.) More complex things can be
+harder if it makes the simple things simpler; that&#8217;s OK.</li>
+<li>Make it easy for the user to do the right thing. (Guarantee well-formed XML,
+and make a design that makes it easy to separate back-end logic, viewing logic
+and HTML templating. Incidentially, I&#8217;ve only seen one library ever that does
+the same properly for database logic and other back-end logic, and that is the
+excellent libpqxx library.)</li>
+<li>Premature optimization is the root of all evil; most web systems are not
+performance limited by their output anyway.</li>
+<li>Don&#8217;t try to be everything for everyone. (XML::Template can not output to
+plain text or PostScript, even though that would clearly be useful for some
+people in some cases.)</li>
+<li>Be language agnostic. (DOM is rather universal, and there&#8217;s a useful
+implementation for most web-relevant languages out there.) Maintaining
+several implementations in several languages is suboptimal, but it&#8217;s better
+than only supporting one language or having someting that needs to reimplement
+the entire DOM with wrappers for each language. (Thankfully, by relying on
+the DOM support in each language, the code so far is under 200 lines per
+implementation, so maintaining this hopefully shouldn&#8217;t be much work.) As
+proof-of-concept, there are got Perl, PHP, Python and Ruby implementations
+that work and feel largely the same (and even a SAX-based Perl
+implementation, for larger trees that won&#8217;t fit into memory) &#8211; other
+implementations are welcome.  This is backed up by a test suite, which
+ensures that all the different implementations return structurally
+equivalent XML for a certain set of test cases. Porting to a new language
+is not difficult, and once you&#8217;ve got all the test cases to pass, your
+work is most likely done.</li>
+</ul>
+</blockquote>
+<p>As a side note to the second point, I&#8217;ve spent some time wondering exactly
+_why_ you want to separate the back-end logic from your HTML, and why people
+don&#8217;t seem to do it. After some thought, I&#8217;ve decided that what I really want
+is to get the HTML away from my code &#8211; not the other way round. (In other
+words, HTML uglifies code more then code uglifies HTML &#8211; someone using a
+WYSIWYG editor to generate their HTML might disagree, though.)</p>
+<p>However, this also means that you want the _entire_ viewing logic away from
+your back-end logic if you can. When you process your data, you really don&#8217;t
+want to care if you&#8217;re on an odd or even row to get those styled differently
+in the HTML; that&#8217;s for another part. XML::Template, incidentially, by
+moving the entire output logic to the end of your script, makes this easy
+for you; you <em>can</em> do the viewing logic &#8220;underway&#8221; if you really want to,
+but there&#8217;s no incentive to, and the natural modus operandi is to split
+viewing and other logic into two distinct parts.</p>
+<p>An open question is how to do internationalization on web pages; I haven&#8217;t
+yet seen a good system for handling this. To be honest, this might be something
+handled in another layer (cf. &#8220;don&#8217;t try to be everything to everyone&#8221; above),
+but I&#8217;d be interesting to hear others&#8217; thoughts on this, especially how
+you could achieve clean text/markup separation (stuff like gettext doesn&#8217;t
+really work well with markup in general).</p>
+<p>More to come here at some point, probably. Now, go out and just _use_ the
+thing &#8211; I hope it will make your life on the web simpler. :-)</p>
+<blockquote>
+<ul class="simple">
+<li>Steinar H. Gunderson &lt;<a class="reference external" href="mailto:sgunderson&#37;&#52;&#48;bigfoot&#46;com">sgunderson<span>&#64;</span>bigfoot<span>&#46;</span>com</a>&gt;, <a class="reference external" href="http://www.sesse.net/">http://www.sesse.net/</a></li>
+</ul>
+</blockquote>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="../reference/settings.html"
+                                  title="previous chapter">Settings</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="../changelog.html"
+                                  title="next chapter">Changelog</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../sources/appendix/xmltemplate.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../changelog.html" title="Changelog"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../reference/settings.html" title="Settings"
+             >previous</a> |</li>
+        <li><a href="../index.html">pyroutes v0.3.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2009-2010, Kristian Klette.
+      Last updated on Nov 16, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.6.
+    </div>
+  </body>
+</html>

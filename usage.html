@@ -1,0 +1,351 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Let’s do it! (aka Quickstart) &mdash; pyroutes v0.3.0 documentation</title>
+    <link rel="stylesheet" href="static/pyroutes.css" type="text/css" />
+    <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.3.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="static/jquery.js"></script>
+    <script type="text/javascript" src="static/doctools.js"></script>
+    <link rel="top" title="pyroutes v0.3.0 documentation" href="index.html" />
+    <link rel="next" title="Deployment" href="deployment.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="deployment.html" title="Deployment"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Installation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">pyroutes v0.3.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="let-s-do-it-aka-quickstart">
+<h1>Let&#8217;s do it! (aka Quickstart)<a class="headerlink" href="#let-s-do-it-aka-quickstart" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="application-entry-point">
+<h2>Application entry point<a class="headerlink" href="#application-entry-point" title="Permalink to this headline">¶</a></h2>
+<p>The application entry point is located directly in the <tt class="docutils literal"><span class="pre">pyroutes</span></tt> module.
+Just do</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pyroutes</span> <span class="kn">import</span> <span class="n">application</span>
+</pre></div>
+</div>
+<p>in the file you want as a handler for <tt class="docutils literal"><span class="pre">mod_wsgi</span></tt> or your preferred deployment method.
+Let&#8217;s call it <tt class="docutils literal"><span class="pre">handler.py</span></tt> for now.</p>
+</div>
+<div class="section" id="adding-routes">
+<h2>Adding routes<a class="headerlink" href="#adding-routes" title="Permalink to this headline">¶</a></h2>
+<p>Routes are the way for defining which methods should handle requests to which paths.</p>
+<p>This is the most basic example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pyroutes</span> <span class="kn">import</span> <span class="n">route</span>
+<span class="kn">from</span> <span class="nn">pyroutes.http.response</span> <span class="kn">import</span> <span class="n">Response</span>
+
+<span class="nd">@route</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="s">&#39;Hello world!&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Here we define that our index method should handle all requests to <tt class="docutils literal"><span class="pre">/</span></tt>, and
+return the world famous «Hello world!» to the user.</p>
+<p>We can add more routes:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@route</span><span class="p">(</span><span class="s">&#39;/sayhello&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">sayhello</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="s">&#39;Hello </span><span class="si">%s</span><span class="s">!&#39;</span> <span class="o">%</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="s">&#39;world&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>... Easy as pie! Save these at the end of our <tt class="docutils literal"><span class="pre">handler.py</span></tt> file.</p>
+<div class="section" id="route-handling-gotcha-s">
+<h3>Route handling gotcha&#8217;s<a class="headerlink" href="#route-handling-gotcha-s" title="Permalink to this headline">¶</a></h3>
+<p>After adding the two example routes, we have a handler for <tt class="docutils literal"><span class="pre">/</span></tt> and
+<tt class="docutils literal"><span class="pre">/sayhello</span></tt>. If you try to access <tt class="docutils literal"><span class="pre">/foo</span></tt> you will get an 404 exception,
+however if you go to <tt class="docutils literal"><span class="pre">/sayhello/foo</span></tt> your request will be passed to the
+<tt class="docutils literal"><span class="pre">sayhello</span></tt>-method! This is for enabling pretty urls. Pyroutes will always try
+to find the most matching handler, except on the root (<tt class="docutils literal"><span class="pre">/</span></tt>).</p>
+</div>
+</div>
+<div class="section" id="starting-the-development-server">
+<h2>Starting the development server<a class="headerlink" href="#starting-the-development-server" title="Permalink to this headline">¶</a></h2>
+<p>Pyroutes includes a development server to ease local development quite a bit.
+It&#8217;s located in the <tt class="docutils literal"><span class="pre">pyroutes.utils</span></tt> module.</p>
+<p>Using it is as easy as adding this to <tt class="docutils literal"><span class="pre">handler.py</span></tt> from the previous
+examples.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">pyroutes.utils</span> <span class="kn">import</span> <span class="n">devserver</span>
+    <span class="n">devserver</span><span class="p">(</span><span class="n">application</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="serving-static-media">
+<h3>Serving static media<a class="headerlink" href="#serving-static-media" title="Permalink to this headline">¶</a></h3>
+<p>Static media is normally served directly from the web server, but we need
+static files when developing locally as well. You can serve static files through
+the devserver using the <tt class="docutils literal"><span class="pre">fileserver</span></tt> route in <tt class="docutils literal"><span class="pre">pyroutes.utils</span></tt>. Change the
+previous code to something like this:</p>
+<div class="highlight-python"><pre>if __name__ == '__main__':
+    from import utils
+    route('/media')(utils.fileserver)
+    devserver(application)</pre>
+</div>
+<p>This will now serve anything you have in the folder called <tt class="docutils literal"><span class="pre">media</span></tt> in your
+working directory in the <tt class="docutils literal"><span class="pre">/media</span></tt> path. This behaviour can be modified in
+<tt class="docutils literal"><span class="pre">pyroutes_settings</span></tt>.</p>
+</div>
+</div>
+<div class="section" id="firing-it-up">
+<h2>Firing it up<a class="headerlink" href="#firing-it-up" title="Permalink to this headline">¶</a></h2>
+<p>Let&#8217;s try what we have so far. Open up a terminal, go to the directory where
+you saved the <tt class="docutils literal"><span class="pre">handler.py</span></tt> file, and execute it:</p>
+<div class="highlight-python"><pre>$ python handler.py
+Starting server on 0.0.0.0 port 8001...</pre>
+</div>
+<p>Your application should now be running on port 8001. Let&#8217;s try it.:</p>
+<div class="highlight-python"><pre>$ echo `wget -q -O - http://localhost:8001/`
+Hello world!
+$ echo `wget -q -O - http://localhost:8001/sayhello?name=Pyroutes`
+Hello Pyroutes!</pre>
+</div>
+</div>
+<div class="section" id="debugging">
+<h2>Debugging<a class="headerlink" href="#debugging" title="Permalink to this headline">¶</a></h2>
+<p>If something in the code was not correct, and an exception was thrown, you&#8217;ll
+get a error page with not much information. You can see more about what went
+wrong if you enable pyroutes&#8217; debugging.</p>
+<p>This is done by creating a file called <tt class="docutils literal"><span class="pre">pyroutes_settings.py</span></tt> in your
+<tt class="docutils literal"><span class="pre">PYTHONPATH</span></tt>. Create this file and add:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">DEBUG</span><span class="o">=</span><span class="bp">True</span>
+</pre></div>
+</div>
+<p>Now refresh the page with the error, and you&#8217;ll get a lot more information to work with.</p>
+</div>
+<div class="section" id="using-urls-as-data">
+<h2>Using URLs as data<a class="headerlink" href="#using-urls-as-data" title="Permalink to this headline">¶</a></h2>
+<p>As of Pyroutes &gt;= 0.3.0 using URLs as data for your handler really simple.
+Let&#8217;s create an <tt class="docutils literal"><span class="pre">archive</span></tt> route as an example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@route</span><span class="p">(</span><span class="s">&#39;/archive&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">archive</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">,</span> <span class="n">day</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="s">&#39;Year: </span><span class="si">%s</span><span class="s">  Month: </span><span class="si">%s</span><span class="s">  Day: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">,</span> <span class="n">day</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>And let&#8217;s try it:</p>
+<div class="highlight-python"><pre>$ echo `wget -q -O - http://localhost:8001/archive`
+Year: Month: Day:
+$ echo `wget -q -O - http://localhost:8001/archive/2010`
+Year: 2010 Month: Day:
+$ echo `wget -q -O - http://localhost:8001/archive/2010/02`
+Year: 2010 Month: 02 Day:
+$ echo `wget -q -O - http://localhost:8001/archive/2010/02/03`
+Year: 2010 Month: 02 Day: 03
+$ echo `wget -q -O - http://localhost:8001/archive/2010/02/03/foobar`
+Year: 2010 Month: 02 Day: 03</pre>
+</div>
+<p>It&#8217;s important to know that variables not available from the URL is passed to
+your method as an empty string or your defined default in the method
+declaration.</p>
+</div>
+<div class="section" id="accessing-request-data">
+<h2>Accessing request data<a class="headerlink" href="#accessing-request-data" title="Permalink to this headline">¶</a></h2>
+<p>One common operation in developing web applications is doing stuff with user
+data.  Pyroutes gives you easy access to the POST, GET and FILES posted to your
+request handler.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@route</span><span class="p">(</span><span class="s">&#39;/newpost&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">new_post</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">if</span> <span class="s">&#39;image&#39;</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">FILES</span><span class="p">:</span>
+        <span class="c"># Do stuff with image</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">FILES</span><span class="p">[</span><span class="s">&#39;image&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">FILES</span><span class="p">[</span><span class="s">&#39;image&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="k">pass</span>
+    <span class="n">category</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;category&#39;</span><span class="p">,</span><span class="s">&#39;default&#39;</span><span class="p">)</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;title&#39;</span><span class="p">,</span> <span class="s">&#39;None&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">title</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="s">&#39;no title!&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="s">&#39;OK&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If multiple fields have the same name, the value in the respective
+dicts are a list of the given values.</p>
+</div>
+</div>
+<div class="section" id="sending-responses-to-the-user">
+<h2>Sending responses to the user<a class="headerlink" href="#sending-responses-to-the-user" title="Permalink to this headline">¶</a></h2>
+<p>Every route must return an instance of <tt class="docutils literal"><span class="pre">pyroutes.http.response.Response</span></tt>, or
+one of it&#8217;s subclasses. The former defaults to sending a
+<tt class="docutils literal"><span class="pre">text/html</span></tt>-response with status code <tt class="docutils literal"><span class="pre">200</span> <span class="pre">OK</span></tt>.</p>
+<p>We have the follow built-in responses:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Response</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">status_code</span><span class="o">=</span><span class="s">&#39;200 OK&#39;</span><span class="p">,</span>
+    <span class="n">default_content_header</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">Redirect</span><span class="p">(</span><span class="n">location</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>content may be any string or iterable. This means you can do something like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@route</span><span class="p">(</span><span class="s">&#39;/pdf&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">pdf</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="nb">buffer</span> <span class="o">=</span> <span class="n">cStringIO</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;mypdf.pdf&quot;</span><span class="p">,</span> <span class="s">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">pdf_file</span><span class="p">:</span>
+        <span class="nb">buffer</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">pdf_file</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="nb">buffer</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s">&#39;application/pdf&#39;</span><span class="p">)],</span>
+        <span class="n">default_content_header</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="c-is-for-cookie">
+<h2>C is for cookie..<a class="headerlink" href="#c-is-for-cookie" title="Permalink to this headline">¶</a></h2>
+<p>Cookies are the de-facto way of storing data on the clients. Pyroutes uses
+secure cookies by default. This means that if a user edits his own cookies,
+pyroutes will not accept them. This is done by storing a HMAC-signature, based
+on the cookie its signing and the <tt class="docutils literal"><span class="pre">SECRET_KEY</span></tt> in your settings, along with
+the actual cookie.</p>
+<p>Settings cookies:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@route</span><span class="p">(</span><span class="s">&#39;/cookie-set&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">set_cookies</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">Response</span><span class="p">()</span>
+    <span class="n">response</span><span class="o">.</span><span class="n">cookies</span><span class="o">.</span><span class="n">add_cookie</span><span class="p">(</span><span class="s">&#39;logged_in&#39;</span><span class="p">,</span> <span class="s">&#39;true&#39;</span><span class="p">)</span>
+    <span class="c"># Insecure cookie setting</span>
+    <span class="n">response</span><span class="o">.</span><span class="n">cookies</span><span class="o">.</span><span class="n">add_unsigned_cookie</span><span class="p">(</span><span class="s">&#39;blapp&#39;</span><span class="p">,</span> <span class="s">&#39;foo&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">response</span>
+</pre></div>
+</div>
+<p>Retrieving cookies:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@route</span><span class="p">(</span><span class="s">&#39;/cookie-get&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">get_cookies</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">logged_in</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">COOKIES</span><span class="o">.</span><span class="n">get_cookie</span><span class="p">(</span><span class="s">&#39;logged_in&#39;</span><span class="p">)</span>
+    <span class="n">blapp</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">COOKIES</span><span class="o">.</span><span class="n">get_unsigned_cookie</span><span class="p">(</span><span class="s">&#39;blapp&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">logged_in</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="s">&#39;Hi!&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="s">&#39;Go away!&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="let-s-go-templates">
+<h2>Let&#8217;s go templates!<a class="headerlink" href="#let-s-go-templates" title="Permalink to this headline">¶</a></h2>
+<p>Pyroutes bundles XML-Template, a template system created by Steinar H.
+Gunderson, which might seem a bit «chunky», but it really fast, and guarantees
+it&#8217;s output to be valid XML (or in our case XHTML). The big difference between
+XML-template and most other template systems out there, is that XML-template is
+purely a representation layer. You don&#8217;t have any logic in your templates.</p>
+<p>Now, pyroutes has a small wrapper around XML-Template for handling the most
+common template task; having a base-template, and a separate template for your
+current task.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pyroutes.template</span> <span class="kn">import</span> <span class="n">TemplateRenderer</span>
+
+<span class="n">tmpl</span> <span class="o">=</span> <span class="n">TemplateRenderer</span><span class="p">(</span><span class="s">&#39;base.xml&#39;</span><span class="p">)</span>
+
+<span class="nd">@route</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">tmpl</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s">&#39;index.xml&#39;</span><span class="p">,</span> <span class="p">{}))</span>
+</pre></div>
+</div>
+<p>For more information about XML-Template, see <a class="reference external" href="appendix/xmltemplate.html#xml-template-intro"><em>Introduction to XML::Template</em></a>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">Let&#8217;s do it! (aka Quickstart)</a><ul>
+<li><a class="reference external" href="#application-entry-point">Application entry point</a></li>
+<li><a class="reference external" href="#adding-routes">Adding routes</a><ul>
+<li><a class="reference external" href="#route-handling-gotcha-s">Route handling gotcha&#8217;s</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#starting-the-development-server">Starting the development server</a><ul>
+<li><a class="reference external" href="#serving-static-media">Serving static media</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#firing-it-up">Firing it up</a></li>
+<li><a class="reference external" href="#debugging">Debugging</a></li>
+<li><a class="reference external" href="#using-urls-as-data">Using URLs as data</a></li>
+<li><a class="reference external" href="#accessing-request-data">Accessing request data</a></li>
+<li><a class="reference external" href="#sending-responses-to-the-user">Sending responses to the user</a></li>
+<li><a class="reference external" href="#c-is-for-cookie">C is for cookie..</a></li>
+<li><a class="reference external" href="#let-s-go-templates">Let&#8217;s go templates!</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="installation.html"
+                                  title="previous chapter">Installation</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="deployment.html"
+                                  title="next chapter">Deployment</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="sources/usage.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="deployment.html" title="Deployment"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Installation"
+             >previous</a> |</li>
+        <li><a href="index.html">pyroutes v0.3.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2009-2010, Kristian Klette.
+      Last updated on Nov 16, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.6.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pyroutes &mdash; pyroutes v0.3.0 documentation</title>
+    <link rel="stylesheet" href="static/pyroutes.css" type="text/css" />
+    <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.3.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="static/jquery.js"></script>
+    <script type="text/javascript" src="static/doctools.js"></script>
+    <link rel="top" title="pyroutes v0.3.0 documentation" href="#" />
+    <link rel="next" title="Installation" href="installation.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Installation"
+             accesskey="N">next</a> |</li>
+        <li><a href="#">pyroutes v0.3.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="pyroutes">
+<h1>pyroutes<a class="headerlink" href="#pyroutes" title="Permalink to this headline">¶</a></h1>
+<p>pyroutes is a really small framework (more of a wrapper really) around wsgi for
+developing small python web apps.</p>
+<p>If you&#8217;re developing a larger project, I suggest you point your browser to <a class="reference external" href="http://djangoproject.com">http://djangoproject.com</a> instead :-)</p>
+</div>
+<div class="section" id="user-manual">
+<h1>User manual<a class="headerlink" href="#user-manual" title="Permalink to this headline">¶</a></h1>
+<p>Contents:</p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference external" href="installation.html#installation-with-pip">Installation with pip</a></li>
+<li class="toctree-l2"><a class="reference external" href="installation.html#installation-with-easy-install">Installation with easy_install</a></li>
+<li class="toctree-l2"><a class="reference external" href="installation.html#following-the-development">Following the development</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="usage.html">Let&#8217;s do it! (aka Quickstart)</a><ul>
+<li class="toctree-l2"><a class="reference external" href="usage.html#application-entry-point">Application entry point</a></li>
+<li class="toctree-l2"><a class="reference external" href="usage.html#adding-routes">Adding routes</a></li>
+<li class="toctree-l2"><a class="reference external" href="usage.html#starting-the-development-server">Starting the development server</a></li>
+<li class="toctree-l2"><a class="reference external" href="usage.html#firing-it-up">Firing it up</a></li>
+<li class="toctree-l2"><a class="reference external" href="usage.html#debugging">Debugging</a></li>
+<li class="toctree-l2"><a class="reference external" href="usage.html#using-urls-as-data">Using URLs as data</a></li>
+<li class="toctree-l2"><a class="reference external" href="usage.html#accessing-request-data">Accessing request data</a></li>
+<li class="toctree-l2"><a class="reference external" href="usage.html#sending-responses-to-the-user">Sending responses to the user</a></li>
+<li class="toctree-l2"><a class="reference external" href="usage.html#c-is-for-cookie">C is for cookie..</a></li>
+<li class="toctree-l2"><a class="reference external" href="usage.html#let-s-go-templates">Let&#8217;s go templates!</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="deployment.html">Deployment</a><ul>
+<li class="toctree-l2"><a class="reference external" href="deployment.html#apache2-2-and-mod-wsgi">Apache2.2 and mod_wsgi</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="middleware.html">Middleware</a><ul>
+<li class="toctree-l2"><a class="reference external" href="middleware.html#adding-middleware">Adding middleware</a></li>
+<li class="toctree-l2"><a class="reference external" href="middleware.html#creating-your-own">Creating your own</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="reference-documentation">
+<h1>Reference documentation<a class="headerlink" href="#reference-documentation" title="Permalink to this headline">¶</a></h1>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="reference/pyroutes.html">Route handling</a></li>
+<li class="toctree-l1"><a class="reference external" href="reference/response.html">Request and response objects</a><ul>
+<li class="toctree-l2"><a class="reference external" href="reference/response.html#module-pyroutes.http.request">Overview</a></li>
+<li class="toctree-l2"><a class="reference external" href="reference/response.html#request-objects">Request objects</a></li>
+<li class="toctree-l2"><a class="reference external" href="reference/response.html#response-objects">Response objects</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="reference/template.html">Templates</a></li>
+<li class="toctree-l1"><a class="reference external" href="reference/utils.html">Utilities</a></li>
+<li class="toctree-l1"><a class="reference external" href="reference/settings.html">Settings</a></li>
+</ul>
+</div>
+<div class="section" id="appendices">
+<h1>Appendices<a class="headerlink" href="#appendices" title="Permalink to this headline">¶</a></h1>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="appendix/xmltemplate.html">Introduction to XML::Template</a></li>
+</ul>
+</div>
+<div class="section" id="release-change-logs">
+<h1>Release change logs<a class="headerlink" href="#release-change-logs" title="Permalink to this headline">¶</a></h1>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="changelog.html">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference external" href="changelog.html#release-0-3-1">Release 0.3.1</a></li>
+<li class="toctree-l2"><a class="reference external" href="changelog.html#release-0-3-0">Release 0.3.0</a></li>
+<li class="toctree-l2"><a class="reference external" href="changelog.html#release-0-2-2">Release 0.2.2</a></li>
+<li class="toctree-l2"><a class="reference external" href="changelog.html#release-0-2-1">Release 0.2.1</a></li>
+<li class="toctree-l2"><a class="reference external" href="changelog.html#release-0-2-0">Release 0.2.0</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="contributing">
+<h1>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h1>
+<p>The source code is version controlled using git and resides on <a class="reference external" href="http://github.com/klette/pyroutes">http://github.com/klette/pyroutes</a>. Feel free to clone it
+and fix stuff :-) Just remember to check if the test-suite still passes. I will not pull in features if they don&#8217;t include
+documentation, unittest or simply breaks the existing tests. Bugfixes to the tests are always welcome too though.</p>
+<p>For the tests to run, you will need some extra packages. Names are by
+debian/ubuntu package name.</p>
+<blockquote>
+<ul class="simple">
+<li>python-coverage</li>
+<li>python-nose</li>
+</ul>
+</blockquote>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="#">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">pyroutes</a></li>
+<li><a class="reference external" href="#user-manual">User manual</a><ul>
+</ul>
+</li>
+<li><a class="reference external" href="#reference-documentation">Reference documentation</a><ul>
+</ul>
+</li>
+<li><a class="reference external" href="#appendices">Appendices</a><ul>
+</ul>
+</li>
+<li><a class="reference external" href="#release-change-logs">Release change logs</a><ul>
+</ul>
+</li>
+<li><a class="reference external" href="#contributing">Contributing</a></li>
+</ul>
+
+            <h4>Next topic</h4>
+            <p class="topless"><a href="installation.html"
+                                  title="next chapter">Installation</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="sources/index.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Installation"
+             >next</a> |</li>
+        <li><a href="#">pyroutes v0.3.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2009-2010, Kristian Klette.
+      Last updated on Nov 16, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.6.
+    </div>
+  </body>
+</html>

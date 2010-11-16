@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Settings &mdash; pyroutes v0.3.0 documentation</title>
+    <link rel="stylesheet" href="../static/pyroutes.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.3.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <link rel="top" title="pyroutes v0.3.0 documentation" href="../index.html" />
+    <link rel="next" title="Introduction to XML::Template" href="../appendix/xmltemplate.html" />
+    <link rel="prev" title="Utilities" href="utils.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="../appendix/xmltemplate.html" title="Introduction to XML::Template"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="utils.html" title="Utilities"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">pyroutes v0.3.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="settings">
+<span id="pyroutes-settings"></span><h1>Settings<a class="headerlink" href="#settings" title="Permalink to this headline">¶</a></h1>
+<p>Pyroutes enables you to have per project settings by overriding
+<tt class="docutils literal"><span class="pre">pyroutes.settings</span></tt> in a file called <tt class="docutils literal"><span class="pre">pyroutes_settings.py</span></tt> in your
+<tt class="docutils literal"><span class="pre">PYTHON_PATH</span></tt>.</p>
+<p>The following settings are defined and can be overridden:</p>
+<dl class="attribute">
+<dt id="DEBUG">
+<tt class="descname">DEBUG</tt><a class="headerlink" href="#DEBUG" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enables debugging output on the <tt class="docutils literal"><span class="pre">500</span> <span class="pre">Server</span> <span class="pre">Error</span></tt>. Should
+not be true in production, as it might leak sensitive data.</p>
+<p><strong>Default</strong>: False</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="DEFAULT_CONTENT_TYPE">
+<tt class="descname">DEFAULT_CONTENT_TYPE</tt><a class="headerlink" href="#DEFAULT_CONTENT_TYPE" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default content type set by <tt class="docutils literal"><span class="pre">Response</span></tt>.</p>
+<p><strong>Default</strong>: <cite>&#8216;text/html; charset=utf8&#8217;</cite></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="SECRET_KEY">
+<tt class="descname">SECRET_KEY</tt><a class="headerlink" href="#SECRET_KEY" title="Permalink to this definition">¶</a></dt>
+<dd>Key for cryptographic functions in pyroutes.  You <em>must</em> override this in
+your per project settings for the crypto to add any value.</dd></dl>
+
+<dl class="attribute">
+<dt id="TEMPLATE_DIR">
+<tt class="descname">TEMPLATE_DIR</tt><a class="headerlink" href="#TEMPLATE_DIR" title="Permalink to this definition">¶</a></dt>
+<dd><p>The location of the filesystem <tt class="docutils literal"><span class="pre">TemplateRenderer</span></tt> looks for
+the templates. If set to None it will try to load from the current
+working directory.</p>
+<p><strong>Default</strong>: None</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="MIDDLEWARE">
+<tt class="descname">MIDDLEWARE</tt><a class="headerlink" href="#MIDDLEWARE" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of the enabled middlewares to be run, from outer to inner.
+You should always append to this list if enabling more middleware,
+as the defaults should always be there.</p>
+<p>You can read more about middleware here <a class="reference external" href="../middleware.html#middleware"><em>Middleware</em></a>.</p>
+<p><strong>Default</strong>: <tt class="docutils literal"><span class="pre">['pyroutes.middleware.errors.NotFoundMiddleware',</span>
+<span class="pre">'pyroutes.middleware.errors.ErrorHandlerMiddleware',]</span></tt></p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="utils.html"
+                                  title="previous chapter">Utilities</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="../appendix/xmltemplate.html"
+                                  title="next chapter">Introduction to XML::Template</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../sources/reference/settings.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../appendix/xmltemplate.html" title="Introduction to XML::Template"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="utils.html" title="Utilities"
+             >previous</a> |</li>
+        <li><a href="../index.html">pyroutes v0.3.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2009-2010, Kristian Klette.
+      Last updated on Nov 16, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.6.
+    </div>
+  </body>
+</html>
