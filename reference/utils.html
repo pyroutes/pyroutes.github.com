@@ -5,13 +5,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Utilities &mdash; pyroutes v0.3.0 documentation</title>
+    <title>Utilities &mdash; pyroutes v0.3.1 documentation</title>
     <link rel="stylesheet" href="../static/pyroutes.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.3.0',
+        VERSION:     '0.3.1',
         COLLAPSE_MODINDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -19,7 +19,7 @@
     </script>
     <script type="text/javascript" src="../static/jquery.js"></script>
     <script type="text/javascript" src="../static/doctools.js"></script>
-    <link rel="top" title="pyroutes v0.3.0 documentation" href="../index.html" />
+    <link rel="top" title="pyroutes v0.3.1 documentation" href="../index.html" />
     <link rel="next" title="Settings" href="settings.html" />
     <link rel="prev" title="Templates" href="template.html" /> 
   </head>
@@ -39,7 +39,7 @@
         <li class="right" >
           <a href="template.html" title="Templates"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">pyroutes v0.3.0 documentation</a> &raquo;</li> 
+        <li><a href="../index.html">pyroutes v0.3.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -48,8 +48,44 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="utilities">
-<h1>Utilities<a class="headerlink" href="#utilities" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-pyroutes.utils">
+<h1>Utilities<a class="headerlink" href="#module-pyroutes.utils" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="pyroutes.utils.devserver">
+<tt class="descclassname">pyroutes.utils.</tt><tt class="descname">devserver</tt><big>(</big><em>application</em>, <em>port=8001</em>, <em>address='0.0.0.0'</em>, <em>auto_reload=True</em><big>)</big><a class="headerlink" href="#pyroutes.utils.devserver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simple development server for rapid development. Use to create a simple web
+server. For testing purposes only. Has no builting handling of file
+serving, use fileserver in this class. Typical usage:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pyroutes</span> <span class="kn">import</span> <span class="n">route</span><span class="p">,</span> <span class="n">application</span><span class="p">,</span> <span class="n">utils</span>
+<span class="c">#&lt;define routes&gt;</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">utils</span><span class="o">.</span><span class="n">devserver</span><span class="p">(</span><span class="n">application</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This starts a server listening on all interfaces, port 8001. It
+automatically reloads modified files.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyroutes.utils.fileserver">
+<tt class="descclassname">pyroutes.utils.</tt><tt class="descname">fileserver</tt><big>(</big><em>request</em><big>)</big><a class="headerlink" href="#pyroutes.utils.fileserver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simple file server for development servers. Not for use in production
+environments. Typical usage:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pyroutes</span> <span class="kn">import</span> <span class="n">route</span><span class="p">,</span> <span class="n">utils</span>
+<span class="n">route</span><span class="p">(</span><span class="s">&#39;/media&#39;</span><span class="p">)(</span><span class="n">utils</span><span class="o">.</span><span class="n">fileserver</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>That will add the fileserver to the route /media. If DEV_MEDIA_BASE is
+defined in settings, host files from this folder. Otherwise, use current
+working directory.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">DEV_MEDIA_BASE and route path is concatenated, i.e. if you use
+&#8216;/srv/media&#8217; for as the media base, and map the route to &#8216;/files&#8217;, all
+files will be looked for in &#8216;/srv/media/files&#8217;</p>
+</div>
+</dd></dl>
+
 </div>
 
 
@@ -101,12 +137,12 @@
         <li class="right" >
           <a href="template.html" title="Templates"
              >previous</a> |</li>
-        <li><a href="../index.html">pyroutes v0.3.0 documentation</a> &raquo;</li> 
+        <li><a href="../index.html">pyroutes v0.3.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
       &copy; Copyright 2009-2010, Kristian Klette.
-      Last updated on Nov 16, 2010.
+      Last updated on Nov 17, 2010.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.6.
     </div>
   </body>
