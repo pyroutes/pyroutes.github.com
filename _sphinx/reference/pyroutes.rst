@@ -22,9 +22,10 @@ Route handling
 
    Example::
 
-       pyroutes.route('/foo/bar')
+       @pyroutes.route('/foo/bar')
        def foo_method(request):
            return Response("foo")
+
        pyroutes.reverse_url('foo_method')
        '/foo/bar'
 

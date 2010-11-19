@@ -66,9 +66,10 @@ optionally more arguments auto-populated from the path.</p>
 <tt class="descclassname">pyroutes.</tt><tt class="descname">reverse_url</tt><big>(</big><em>handler</em><big>)</big><a class="headerlink" href="#pyroutes.reverse_url" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the path a handler is responible for.</p>
 <p>Example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">pyroutes</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s">&#39;/foo/bar&#39;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@pyroutes.route</span><span class="p">(</span><span class="s">&#39;/foo/bar&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">foo_method</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="s">&quot;foo&quot;</span><span class="p">)</span>
+
 <span class="n">pyroutes</span><span class="o">.</span><span class="n">reverse_url</span><span class="p">(</span><span class="s">&#39;foo_method&#39;</span><span class="p">)</span>
 <span class="s">&#39;/foo/bar&#39;</span>
 </pre></div>
@@ -131,7 +132,7 @@ optionally more arguments auto-populated from the path.</p>
     </div>
     <div class="footer">
       &copy; Copyright 2009-2010, Kristian Klette.
-      Last updated on Nov 17, 2010.
+      Last updated on Nov 19, 2010.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.6.
     </div>
   </body>
