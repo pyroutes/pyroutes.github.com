@@ -1,1 +1,9 @@
-This repository will hold the official pages of pyroutes.
+This repository holds the official pages of pyroutes.
+
+To build the pages you need to make sure pyroutes is in your path (by a
+symblink in the _sphinx folder or similar) and that you have updated the
+sphinx-to-github submodule. Du this using git submodule update.
+
+Once all is set, run make html to build the file. We should find an elegant way
+to include the files on the root, other than moving them there... Patches
+accepted =)
