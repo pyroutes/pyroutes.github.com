@@ -1,3 +1,4 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -12,12 +13,13 @@
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '0.3.1',
-        COLLAPSE_MODINDEX: false,
+        COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
     <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
     <script type="text/javascript" src="../static/doctools.js"></script>
     <link rel="top" title="pyroutes v0.3.1 documentation" href="../index.html" />
     <link rel="next" title="Introduction to XML::Template" href="../appendix/xmltemplate.html" />
@@ -31,8 +33,8 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../modindex.html" title="Global Module Index"
-             accesskey="M">modules</a> |</li>
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="../appendix/xmltemplate.html" title="Introduction to XML::Template"
              accesskey="N">next</a> |</li>
@@ -72,8 +74,9 @@ not be true in production, as it might leak sensitive data.</p>
 <dl class="attribute">
 <dt id="SECRET_KEY">
 <tt class="descname">SECRET_KEY</tt><a class="headerlink" href="#SECRET_KEY" title="Permalink to this definition">¶</a></dt>
-<dd>Key for cryptographic functions in pyroutes.  You <em>must</em> override this in
-your per project settings for the crypto to add any value.</dd></dl>
+<dd><p>Key for cryptographic functions in pyroutes.  You <em>must</em> override this in
+your per project settings for the crypto to add any value.</p>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="TEMPLATE_DIR">
@@ -90,9 +93,21 @@ working directory.</p>
 <dd><p>A list of the enabled middlewares to be run, from outer to inner.
 You should always append to this list if enabling more middleware,
 as the defaults should always be there.</p>
-<p>You can read more about middleware here <a class="reference external" href="../middleware.html#middleware"><em>Middleware</em></a>.</p>
+<p>You can read more about middleware here <a class="reference internal" href="../middleware.html#middleware"><em>Middleware</em></a>.</p>
 <p><strong>Default</strong>: <tt class="docutils literal"><span class="pre">['pyroutes.middleware.errors.NotFoundMiddleware',</span>
 <span class="pre">'pyroutes.middleware.errors.ErrorHandlerMiddleware',]</span></tt></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="SITE_ROOT">
+<tt class="descname">SITE_ROOT</tt><a class="headerlink" href="#SITE_ROOT" title="Permalink to this definition">¶</a></dt>
+<dd><p>This setting governs the behaviour of the Redirect class.</p>
+<p>Any redirect that isn&#8217;t absolute will be relative to this path. E.g.
+if an application is set up at <a class="reference external" href="http://example.com/pyroutes/demo/">http://example.com/pyroutes/demo/</a> then as
+default a Redirect(&#8216;/foo&#8217;) will go to /pyroutes/demo/foo/. If the SITE_ROOT
+variable is set to the empty string, the redirect goes to /foo/ and if
+SITE_ROOT is set to &#8216;/bar&#8217; the redirect goes to /bar/foo/.</p>
+<p><strong>Default</strong>: <tt class="docutils literal"><span class="pre">Detected</span> <span class="pre">automatically</span> <span class="pre">from</span> <span class="pre">environment</span></tt></p>
 </dd></dl>
 
 </div>
@@ -103,30 +118,30 @@ as the defaults should always be there.</p>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-            <h4>Previous topic</h4>
-            <p class="topless"><a href="utils.html"
-                                  title="previous chapter">Utilities</a></p>
-            <h4>Next topic</h4>
-            <p class="topless"><a href="../appendix/xmltemplate.html"
-                                  title="next chapter">Introduction to XML::Template</a></p>
-            <h3>This Page</h3>
-            <ul class="this-page-menu">
-              <li><a href="../sources/reference/settings.txt"
-                     rel="nofollow">Show Source</a></li>
-            </ul>
-          <div id="searchbox" style="display: none">
-            <h3>Quick search</h3>
-              <form class="search" action="../search.html" method="get">
-                <input type="text" name="q" size="18" />
-                <input type="submit" value="Go" />
-                <input type="hidden" name="check_keywords" value="yes" />
-                <input type="hidden" name="area" value="default" />
-              </form>
-              <p class="searchtip" style="font-size: 90%">
-              Enter search terms or a module, class or function name.
-              </p>
-          </div>
-          <script type="text/javascript">$('#searchbox').show(0);</script>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="utils.html"
+                        title="previous chapter">Utilities</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../appendix/xmltemplate.html"
+                        title="next chapter">Introduction to XML::Template</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../sources/reference/settings.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -138,7 +153,7 @@ as the defaults should always be there.</p>
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../modindex.html" title="Global Module Index"
+          <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
           <a href="../appendix/xmltemplate.html" title="Introduction to XML::Template"
@@ -150,9 +165,9 @@ as the defaults should always be there.</p>
       </ul>
     </div>
     <div class="footer">
-      &copy; Copyright 2009-2010, Kristian Klette.
-      Last updated on Nov 17, 2010.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.6.
+        &copy; Copyright 2009-2010, Kristian Klette.
+      Last updated on Apr 14, 2011.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
     </div>
   </body>
 </html>
