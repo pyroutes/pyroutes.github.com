@@ -182,16 +182,25 @@ and is not tamper proof.</p>
 
 </dd></dl>
 
+</div>
+</div>
+<div class="section" id="redirect-objects">
+<h2>Redirect objects<a class="headerlink" href="#redirect-objects" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="pyroutes.http.response.Redirect">
-<em class="property">class </em><tt class="descclassname">pyroutes.http.response.</tt><tt class="descname">Redirect</tt><big>(</big><span class="optional">[</span><em>location</em>, <em>absolute_path=False</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyroutes.http.response.Redirect" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">pyroutes.http.response.</tt><tt class="descname">Redirect</tt><big>(</big><em>location</em><span class="optional">[</span>, <em>absolute_path=False</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyroutes.http.response.Redirect" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<p>Redirects. For relative redirects starting with a slash, uses
-settings.BASE_SITE to determine the base URL of the project. If this fails, set
-if in your settings module. If absolute_path is set, or location contains a
-&#8216;://&#8217;, the redirect is not modified to include settings.BASE_SITE.</p>
-</div>
+<p>A redirect shortcut class for redirection responses. This class can make two types of redirects:</p>
+<blockquote>
+<ol class="arabic simple">
+<li>Absolute path redirects: When you want do redirect to outside your application.</li>
+<li>Root App relative redirect: If you want your redirection relative to the root application path</li>
+</ol>
+</blockquote>
+<p>If Your application is deployed on <a class="reference external" href="http://server/apps/myapp">http://server/apps/myapp</a>, a Redirect(&#8220;/some/path&#8221;)
+actually will generate a redirect to &#8220;/apps/myapp/some/path&#8221;.
+And a Redirect(&#8220;/some/path&#8221;, absolute_path=True) will return a redirect to &#8220;/some/path&#8221;.</p>
 </div>
 </div>
 
@@ -213,6 +222,7 @@ if in your settings module. If absolute_path is set, or location contains a
 <li><a class="reference internal" href="#id1">Attributes</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#redirect-objects">Redirect objects</a></li>
 </ul>
 </li>
 </ul>
