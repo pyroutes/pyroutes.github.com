@@ -113,9 +113,17 @@ Attributes
       Deletes a cookie from the browser.
 
 
-.. class:: Redirect([location, absolute_path=False])
+Redirect objects
+----------------
 
-Redirects. For relative redirects starting with a slash, uses
-settings.BASE_SITE to determine the base URL of the project. If this fails, set
-if in your settings module. If absolute_path is set, or location contains a
-'://', the redirect is not modified to include settings.BASE_SITE.
+.. class:: Redirect(location[, absolute_path=False])
+
+A redirect shortcut class for redirection responses. This class can make two types of redirects:
+
+     1. Absolute path redirects: When you want do redirect to outside your application.
+     2. Root App relative redirect: If you want your redirection relative to the root application path
+
+If Your application is deployed on http://server/apps/myapp, a Redirect("/some/path") 
+actually will generate a redirect to "/apps/myapp/some/path".
+And a Redirect("/some/path", absolute_path=True) will return a redirect to "/some/path".
+
