@@ -1,10 +1,10 @@
 Changelog
 =========
 
-Release ***
------------
+Next release
+------------
 
-- Implemented redirection relative to Application's root. See issue #1. (https://github.com/pyroutes/pyroutes/issues/1)
+- Implemented redirection relative to Application's root. See issue #1 on github: https://github.com/pyroutes/pyroutes/issues/1
 
 
 Release 0.3.1
