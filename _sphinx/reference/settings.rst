@@ -48,3 +48,15 @@ The following settings are defined and can be overridden:
    **Default**: ``['pyroutes.middleware.errors.NotFoundMiddleware',
    'pyroutes.middleware.errors.ErrorHandlerMiddleware',]``
 
+
+.. attribute:: SITE_ROOT
+
+   This setting governs the behaviour of the Redirect class.
+
+   Any redirect that isn't absolute will be relative to this path. E.g.
+   if an application is set up at http://example.com/pyroutes/demo/ then as
+   default a Redirect('/foo') will go to /pyroutes/demo/foo/. If the SITE_ROOT
+   variable is set to the empty string, the redirect goes to /foo/ and if
+   SITE_ROOT is set to '/bar' the redirect goes to /bar/foo/.
+
+   **Default**: ``Detected automatically from environment``
