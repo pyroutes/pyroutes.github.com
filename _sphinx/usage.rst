@@ -179,12 +179,8 @@ content may be any string or iterable. This means you can do something like this
 
     @route('/pdf')
     def pdf(request):
-        buffer = cStringIO.StringIO()
-        with open("mypdf.pdf", "rb") as pdf_file:
-            buffer.write(pdf_file.read())
-        return Response(buffer, [('Content-Type', 'application/pdf')],
+        return Response(open("mypdf.pdf"), [('Content-Type', 'application/pdf')],
             default_content_header=False)
-
 
 
 C is for cookie..
