@@ -2,3 +2,6 @@
 /_sphinx/_build/doctrees/
 /_sphinx/_build/html/.buildinfo
 /_sphinx/_build/html/objects.inv
+/objects.inv
+/.buildinfo
+/_sphinx/_build/
