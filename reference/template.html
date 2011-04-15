@@ -1,3 +1,4 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -12,12 +13,13 @@
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '0.3.1',
-        COLLAPSE_MODINDEX: false,
+        COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
     <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
     <script type="text/javascript" src="../static/doctools.js"></script>
     <link rel="top" title="pyroutes v0.3.1 documentation" href="../index.html" />
     <link rel="next" title="Utilities" href="utils.html" />
@@ -31,8 +33,8 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../modindex.html" title="Global Module Index"
-             accesskey="M">modules</a> |</li>
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="utils.html" title="Utilities"
              accesskey="N">next</a> |</li>
@@ -49,7 +51,7 @@
           <div class="body">
             
   <div class="section" id="module-pyroutes.templates">
-<h1>Templates<a class="headerlink" href="#module-pyroutes.templates" title="Permalink to this headline">¶</a></h1>
+<span id="templates"></span><h1>Templates<a class="headerlink" href="#module-pyroutes.templates" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt>
 <tt class="descname">TemplateRenderer([base_template=None, inclusion_param=None,</tt></dt>
@@ -68,9 +70,10 @@ with XML-Template.</p>
 <dl class="method">
 <dt id="pyroutes.templates.render">
 <tt class="descclassname">pyroutes.templates.</tt><tt class="descname">render</tt><big>(</big><em>template</em>, <em>data</em><big>)</big><a class="headerlink" href="#pyroutes.templates.render" title="Permalink to this definition">¶</a></dt>
-<dd>Renders a template and returns the result as a string.
+<dd><p>Renders a template and returns the result as a string.
 Takes two parameters, the child template to be rendered,
-and the data passed to the templates.</dd></dl>
+and the data passed to the templates.</p>
+</dd></dl>
 
 </div>
 
@@ -80,30 +83,30 @@ and the data passed to the templates.</dd></dl>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-            <h4>Previous topic</h4>
-            <p class="topless"><a href="response.html"
-                                  title="previous chapter">Request and response objects</a></p>
-            <h4>Next topic</h4>
-            <p class="topless"><a href="utils.html"
-                                  title="next chapter">Utilities</a></p>
-            <h3>This Page</h3>
-            <ul class="this-page-menu">
-              <li><a href="../sources/reference/template.txt"
-                     rel="nofollow">Show Source</a></li>
-            </ul>
-          <div id="searchbox" style="display: none">
-            <h3>Quick search</h3>
-              <form class="search" action="../search.html" method="get">
-                <input type="text" name="q" size="18" />
-                <input type="submit" value="Go" />
-                <input type="hidden" name="check_keywords" value="yes" />
-                <input type="hidden" name="area" value="default" />
-              </form>
-              <p class="searchtip" style="font-size: 90%">
-              Enter search terms or a module, class or function name.
-              </p>
-          </div>
-          <script type="text/javascript">$('#searchbox').show(0);</script>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="response.html"
+                        title="previous chapter">Request and response objects</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="utils.html"
+                        title="next chapter">Utilities</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../sources/reference/template.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -115,7 +118,7 @@ and the data passed to the templates.</dd></dl>
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../modindex.html" title="Global Module Index"
+          <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
           <a href="utils.html" title="Utilities"
@@ -127,9 +130,9 @@ and the data passed to the templates.</dd></dl>
       </ul>
     </div>
     <div class="footer">
-      &copy; Copyright 2009-2010, Kristian Klette.
-      Last updated on Nov 17, 2010.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.6.
+        &copy; Copyright 2009-2010, Kristian Klette.
+      Last updated on Apr 14, 2011.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
     </div>
   </body>
 </html>

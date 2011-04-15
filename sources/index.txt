@@ -55,7 +55,7 @@ Release change logs
 Contributing
 ============
 
-The source code is version controlled using git and resides on http://github.com/klette/pyroutes. Feel free to clone it
+The source code is version controlled using git and resides on http://github.com/pyroutes/pyroutes. Feel free to clone it
 and fix stuff :-) Just remember to check if the test-suite still passes. I will not pull in features if they don't include
 documentation, unittest or simply breaks the existing tests. Bugfixes to the tests are always welcome too though.
 

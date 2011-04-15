@@ -1,3 +1,4 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -12,12 +13,13 @@
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '0.3.1',
-        COLLAPSE_MODINDEX: false,
+        COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
     <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
     <script type="text/javascript" src="../static/doctools.js"></script>
     <link rel="top" title="pyroutes v0.3.1 documentation" href="../index.html" /> 
   </head>
@@ -29,8 +31,8 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../modindex.html" title="Global Module Index"
-             accesskey="M">modules</a> |</li>
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li><a href="../index.html">pyroutes v0.3.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
@@ -68,7 +70,7 @@ complaining about no handler found. If you&#8217;re developing on a server, repl
 localhost with the hostname or ip of the server.</p>
 <p>Note that the server will not reload itself as you develop more code, so you&#8217;ll
 either have to restart the server each time you want to check your code, or
-deploy your application behind apache. See <a class="reference external" href="../deployment/apache.html#deployment-apache"><em>Deploying pyroutes with Apache2.2</em></a> for
+deploy your application behind apache. See <a class="reference internal" href="../deployment/apache.html#deployment-apache"><em>Deploying pyroutes with Apache2.2</em></a> for
 information about deployment.</p>
 </div>
 <div class="section" id="hello-world">
@@ -86,7 +88,7 @@ creating a simple Hello World-app.</p>
 </div>
 <p>We start by including the route decorator. This is the way that pyroutes maps
 paths to handler functions.  We also include the Response-class from
-<a title="" class="reference external" href="../reference/response.html#module-pyroutes.http.response"><tt class="xref docutils literal"><span class="pre">pyroutes.http.response</span></tt></a>, which is a helper-class for returning a response
+<a class="reference internal" href="../reference/response.html#module-pyroutes.http.response"><tt class="xref py py-mod docutils literal"><span class="pre">pyroutes.http.response</span></tt></a>, which is a helper-class for returning a response
 to the user.</p>
 <p>We define a method called <cite>say_hello</cite>, all request handlers get two parameters
 from pyroutes. The first argument is the WSGI-enviroment-instace for that
@@ -159,7 +161,7 @@ the way we identify parts of the XHTML from the python code.</p>
     <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">tmpl_renderer</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s">&#39;content.xml&#39;</span><span class="p">,</span> <span class="n">template_data</span><span class="p">))</span>
 </pre></div>
 </div>
-<p>As you can see we imported <cite>TemplateRenderer</cite> from <tt class="xref docutils literal"><span class="pre">pyroutes.template</span></tt>,
+<p>As you can see we imported <cite>TemplateRenderer</cite> from <tt class="xref py py-mod docutils literal"><span class="pre">pyroutes.template</span></tt>,
 and initialized it with our base template as the only parameter. This will make
 the <cite>TemplateRenderer</cite>-instance render what it&#8217;s given and replace the
 <cite>&lt;t:contents /&gt;</cite>-tag in the base template with it.</p>
@@ -194,7 +196,7 @@ creating lists of things. Here is how to do that.</p>
 <div class="section" id="getting-input-from-the-user">
 <h2>Getting input from the user<a class="headerlink" href="#getting-input-from-the-user" title="Permalink to this headline">¶</a></h2>
 <p>One common operation in web applications is getting input from the user, pyroutes handles
-this by providing every route with a <tt class="xref docutils literal"><span class="pre">pyroutes.http.request.Request</span></tt>-object.
+this by providing every route with a <tt class="xref py py-mod docutils literal"><span class="pre">pyroutes.http.request.Request</span></tt>-object.
 This object provides you, among other things, a <cite>POST</cite> and a <cite>GET</cite> dictionary containing
 the values from the user.</p>
 <p>Here is a simple example:</p>
@@ -217,35 +219,35 @@ the values from the user.</p>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-            <h3><a href="../index.html">Table Of Contents</a></h3>
-            <ul>
-<li><a class="reference external" href="#">Tutorial - Part 1 - The basics</a><ul>
-<li><a class="reference external" href="#application-entrypoint-and-development-server">Application entrypoint and development server</a></li>
-<li><a class="reference external" href="#hello-world">Hello world</a></li>
-<li><a class="reference external" href="#templating">Templating</a></li>
-<li><a class="reference external" href="#getting-input-from-the-user">Getting input from the user</a></li>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Tutorial - Part 1 - The basics</a><ul>
+<li><a class="reference internal" href="#application-entrypoint-and-development-server">Application entrypoint and development server</a></li>
+<li><a class="reference internal" href="#hello-world">Hello world</a></li>
+<li><a class="reference internal" href="#templating">Templating</a></li>
+<li><a class="reference internal" href="#getting-input-from-the-user">Getting input from the user</a></li>
 </ul>
 </li>
 </ul>
 
-            <h3>This Page</h3>
-            <ul class="this-page-menu">
-              <li><a href="../sources/tutorial/basics.txt"
-                     rel="nofollow">Show Source</a></li>
-            </ul>
-          <div id="searchbox" style="display: none">
-            <h3>Quick search</h3>
-              <form class="search" action="../search.html" method="get">
-                <input type="text" name="q" size="18" />
-                <input type="submit" value="Go" />
-                <input type="hidden" name="check_keywords" value="yes" />
-                <input type="hidden" name="area" value="default" />
-              </form>
-              <p class="searchtip" style="font-size: 90%">
-              Enter search terms or a module, class or function name.
-              </p>
-          </div>
-          <script type="text/javascript">$('#searchbox').show(0);</script>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../sources/tutorial/basics.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -257,15 +259,15 @@ the values from the user.</p>
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../modindex.html" title="Global Module Index"
+          <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li><a href="../index.html">pyroutes v0.3.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-      &copy; Copyright 2009-2010, Kristian Klette.
-      Last updated on Nov 17, 2010.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.6.
+        &copy; Copyright 2009-2010, Kristian Klette.
+      Last updated on Apr 14, 2011.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
     </div>
   </body>
 </html>

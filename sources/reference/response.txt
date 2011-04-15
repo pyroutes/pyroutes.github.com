@@ -111,3 +111,11 @@ Attributes
    .. method:: del_cookie(key)
       
       Deletes a cookie from the browser.
+
+
+.. class:: Redirect([location, absolute_path=False])
+
+Redirects. For relative redirects starting with a slash, uses
+settings.BASE_SITE to determine the base URL of the project. If this fails, set
+if in your settings module. If absolute_path is set, or location contains a
+'://', the redirect is not modified to include settings.BASE_SITE.

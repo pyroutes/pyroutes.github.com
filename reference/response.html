@@ -1,3 +1,4 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -12,12 +13,13 @@
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
         VERSION:     '0.3.1',
-        COLLAPSE_MODINDEX: false,
+        COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
     <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
     <script type="text/javascript" src="../static/doctools.js"></script>
     <link rel="top" title="pyroutes v0.3.1 documentation" href="../index.html" />
     <link rel="next" title="Templates" href="template.html" />
@@ -31,8 +33,8 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../modindex.html" title="Global Module Index"
-             accesskey="M">modules</a> |</li>
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="template.html" title="Templates"
              accesskey="N">next</a> |</li>
@@ -49,15 +51,15 @@
           <div class="body">
             
   <div class="section" id="module-pyroutes.http">
-<h1>Request and response objects<a class="headerlink" href="#module-pyroutes.http" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="module-pyroutes.http.request">
-<h2>Overview<a class="headerlink" href="#module-pyroutes.http.request" title="Permalink to this headline">¶</a></h2>
+<span id="request-and-response-objects"></span><h1>Request and response objects<a class="headerlink" href="#module-pyroutes.http" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>All handlers and middleware receive an instance
 of the Request class and must return an instance
 of the Response class.</p>
-<p>This document explains the APIs for <tt class="xref docutils literal"><span class="pre">Response</span></tt>
-and <tt class="xref docutils literal"><span class="pre">Request</span></tt>.</p>
-</div>
+<p>This document explains the APIs for <tt class="xref py py-class docutils literal"><span class="pre">Response</span></tt>
+and <tt class="xref py py-class docutils literal"><span class="pre">Request</span></tt>.</p>
+<span class="target" id="module-pyroutes.http.request"></span></div>
 <div class="section" id="request-objects">
 <h2>Request objects<a class="headerlink" href="#request-objects" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -65,26 +67,29 @@ and <tt class="xref docutils literal"><span class="pre">Request</span></tt>.</p>
 <em class="property">class </em><tt class="descclassname">pyroutes.http.request.</tt><tt class="descname">Request</tt><a class="headerlink" href="#pyroutes.http.request.Request" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<div class="section" id="module-pyroutes.http.response">
-<h3>Attributes<a class="headerlink" href="#module-pyroutes.http.response" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="attributes">
+<h3>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h3>
 <dl class="attribute">
 <dt id="pyroutes.http.request.Request.GET">
 <tt class="descclassname">Request.</tt><tt class="descname">GET</tt><a class="headerlink" href="#pyroutes.http.request.Request.GET" title="Permalink to this definition">¶</a></dt>
-<dd>A dictionary of the given GET variables.</dd></dl>
+<dd><p>A dictionary of the given GET variables.</p>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="pyroutes.http.request.Request.POST">
 <tt class="descclassname">Request.</tt><tt class="descname">POST</tt><a class="headerlink" href="#pyroutes.http.request.Request.POST" title="Permalink to this definition">¶</a></dt>
-<dd>A dictionary of the given <tt class="docutils literal"><span class="pre">POST</span></tt> variables. If a multiple
+<dd><p>A dictionary of the given <tt class="docutils literal"><span class="pre">POST</span></tt> variables. If a multiple
 key-value pairs has the same key name, the dictionary value
-for the key will be a list of the values.</dd></dl>
+for the key will be a list of the values.</p>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="pyroutes.http.request.Request.FILES">
 <tt class="descclassname">Request.</tt><tt class="descname">FILES</tt><a class="headerlink" href="#pyroutes.http.request.Request.FILES" title="Permalink to this definition">¶</a></dt>
-<dd>A dictionary of the given files. As with the <tt class="docutils literal"><span class="pre">POST</span></tt> variables,
+<dd><p>A dictionary of the given files. As with the <tt class="docutils literal"><span class="pre">POST</span></tt> variables,
 multiple keys with the same name will result in a list.
-The values are tuples consisting of the filename and a file-like object.</dd></dl>
+The values are tuples consisting of the filename and a file-like object.</p>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="pyroutes.http.request.Request.COOKIES">
@@ -94,24 +99,27 @@ API.</p>
 <dl class="method">
 <dt id="pyroutes.http.request.Request.get_cookie">
 <tt class="descname">get_cookie</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#pyroutes.http.request.Request.get_cookie" title="Permalink to this definition">¶</a></dt>
-<dd>Return the value of a signed cookie, or None if it doesn&#8217;t exist.
+<dd><p>Return the value of a signed cookie, or None if it doesn&#8217;t exist.
 Raises <tt class="docutils literal"><span class="pre">CookieHashInvalid</span></tt> or <tt class="docutils literal"><span class="pre">CookieHashMissing</span></tt> if the
-user has altered the cookies in any way.</dd></dl>
+user has altered the cookies in any way.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="pyroutes.http.request.Request.get_unsigned_cookie">
 <tt class="descname">get_unsigned_cookie</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#pyroutes.http.request.Request.get_unsigned_cookie" title="Permalink to this definition">¶</a></dt>
-<dd>Return the value of a cookie without validating it&#8217;s authenticity.
-Returns None if the cookie doesn&#8217;t exist.</dd></dl>
+<dd><p>Return the value of a cookie without validating it&#8217;s authenticity.
+Returns None if the cookie doesn&#8217;t exist.</p>
+</dd></dl>
 
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyroutes.http.request.Request.ENV">
 <tt class="descclassname">Request.</tt><tt class="descname">ENV</tt><a class="headerlink" href="#pyroutes.http.request.Request.ENV" title="Permalink to this definition">¶</a></dt>
-<dd>The environment as passed from <tt class="docutils literal"><span class="pre">WSGI</span></tt>.</dd></dl>
+<dd><p>The environment as passed from <tt class="docutils literal"><span class="pre">WSGI</span></tt>.</p>
+</dd></dl>
 
-</div>
+<span class="target" id="module-pyroutes.http.response"></span></div>
 </div>
 <div class="section" id="response-objects">
 <h2>Response objects<a class="headerlink" href="#response-objects" title="Permalink to this headline">¶</a></h2>
@@ -131,18 +139,21 @@ to the headers automatically.</p>
 <dl class="attribute">
 <dt id="pyroutes.http.response.Response.content">
 <tt class="descclassname">Response.</tt><tt class="descname">content</tt><a class="headerlink" href="#pyroutes.http.response.Response.content" title="Permalink to this definition">¶</a></dt>
-<dd>A string or an iterable object that is passed to the browser.</dd></dl>
+<dd><p>A string or an iterable object that is passed to the browser.</p>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="pyroutes.http.response.Response.status_code">
 <tt class="descclassname">Response.</tt><tt class="descname">status_code</tt><a class="headerlink" href="#pyroutes.http.response.Response.status_code" title="Permalink to this definition">¶</a></dt>
-<dd>The HTTP status code sent to the client. Can be either a full string
-representation of the status code, or just the number id.</dd></dl>
+<dd><p>The HTTP status code sent to the client. Can be either a full string
+representation of the status code, or just the number id.</p>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="pyroutes.http.response.Response.headers">
 <tt class="descclassname">Response.</tt><tt class="descname">headers</tt><a class="headerlink" href="#pyroutes.http.response.Response.headers" title="Permalink to this definition">¶</a></dt>
-<dd>A list of tuples with key-value pairs of headers and their value.</dd></dl>
+<dd><p>A list of tuples with key-value pairs of headers and their value.</p>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="pyroutes.http.response.Response.cookies">
@@ -151,23 +162,35 @@ representation of the status code, or just the number id.</dd></dl>
 <dl class="method">
 <dt id="pyroutes.http.response.Response.add_cookie">
 <tt class="descname">add_cookie</tt><big>(</big><em>key</em>, <em>value</em><span class="optional">[</span>, <em>expires=None</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyroutes.http.response.Response.add_cookie" title="Permalink to this definition">¶</a></dt>
-<dd>Adds a signed cookie to the response. The <tt class="docutils literal"><span class="pre">expires</span></tt> parameter must be
+<dd><p>Adds a signed cookie to the response. The <tt class="docutils literal"><span class="pre">expires</span></tt> parameter must be
 an instance of <tt class="docutils literal"><span class="pre">datetime.datetime</span></tt> and set the cookie expiration to
-its value. Defaults to infinite lifetime.</dd></dl>
+its value. Defaults to infinite lifetime.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="pyroutes.http.response.Response.add_unsigned_cookie">
 <tt class="descname">add_unsigned_cookie</tt><big>(</big><em>key</em>, <em>value</em><span class="optional">[</span>, <em>expires=None</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyroutes.http.response.Response.add_unsigned_cookie" title="Permalink to this definition">¶</a></dt>
-<dd>Same functionality as <tt class="docutils literal"><span class="pre">add_cookie</span></tt> only the cookie will not be signed,
-and is not tamper proof.</dd></dl>
+<dd><p>Same functionality as <tt class="docutils literal"><span class="pre">add_cookie</span></tt> only the cookie will not be signed,
+and is not tamper proof.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="pyroutes.http.response.Response.del_cookie">
 <tt class="descname">del_cookie</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#pyroutes.http.response.Response.del_cookie" title="Permalink to this definition">¶</a></dt>
-<dd>Deletes a cookie from the browser.</dd></dl>
+<dd><p>Deletes a cookie from the browser.</p>
+</dd></dl>
 
 </dd></dl>
 
+<dl class="class">
+<dt id="pyroutes.http.response.Redirect">
+<em class="property">class </em><tt class="descclassname">pyroutes.http.response.</tt><tt class="descname">Redirect</tt><big>(</big><span class="optional">[</span><em>location</em>, <em>absolute_path=False</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyroutes.http.response.Redirect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Redirects. For relative redirects starting with a slash, uses
+settings.BASE_SITE to determine the base URL of the project. If this fails, set
+if in your settings module. If absolute_path is set, or location contains a
+&#8216;://&#8217;, the redirect is not modified to include settings.BASE_SITE.</p>
 </div>
 </div>
 </div>
@@ -178,46 +201,46 @@ and is not tamper proof.</dd></dl>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-            <h3><a href="../index.html">Table Of Contents</a></h3>
-            <ul>
-<li><a class="reference external" href="#">Request and response objects</a><ul>
-<li><a class="reference external" href="#module-pyroutes.http.request">Overview</a></li>
-<li><a class="reference external" href="#request-objects">Request objects</a><ul>
-<li><a class="reference external" href="#module-pyroutes.http.response">Attributes</a></li>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Request and response objects</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#request-objects">Request objects</a><ul>
+<li><a class="reference internal" href="#attributes">Attributes</a></li>
 </ul>
 </li>
-<li><a class="reference external" href="#response-objects">Response objects</a><ul>
-<li><a class="reference external" href="#id1">Attributes</a></li>
+<li><a class="reference internal" href="#response-objects">Response objects</a><ul>
+<li><a class="reference internal" href="#id1">Attributes</a></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 
-            <h4>Previous topic</h4>
-            <p class="topless"><a href="pyroutes.html"
-                                  title="previous chapter">Route handling</a></p>
-            <h4>Next topic</h4>
-            <p class="topless"><a href="template.html"
-                                  title="next chapter">Templates</a></p>
-            <h3>This Page</h3>
-            <ul class="this-page-menu">
-              <li><a href="../sources/reference/response.txt"
-                     rel="nofollow">Show Source</a></li>
-            </ul>
-          <div id="searchbox" style="display: none">
-            <h3>Quick search</h3>
-              <form class="search" action="../search.html" method="get">
-                <input type="text" name="q" size="18" />
-                <input type="submit" value="Go" />
-                <input type="hidden" name="check_keywords" value="yes" />
-                <input type="hidden" name="area" value="default" />
-              </form>
-              <p class="searchtip" style="font-size: 90%">
-              Enter search terms or a module, class or function name.
-              </p>
-          </div>
-          <script type="text/javascript">$('#searchbox').show(0);</script>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyroutes.html"
+                        title="previous chapter">Route handling</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="template.html"
+                        title="next chapter">Templates</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../sources/reference/response.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -229,7 +252,7 @@ and is not tamper proof.</dd></dl>
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../modindex.html" title="Global Module Index"
+          <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
           <a href="template.html" title="Templates"
@@ -241,9 +264,9 @@ and is not tamper proof.</dd></dl>
       </ul>
     </div>
     <div class="footer">
-      &copy; Copyright 2009-2010, Kristian Klette.
-      Last updated on Nov 17, 2010.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.6.
+        &copy; Copyright 2009-2010, Kristian Klette.
+      Last updated on Apr 14, 2011.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
     </div>
   </body>
 </html>
