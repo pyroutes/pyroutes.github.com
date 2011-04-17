@@ -72,10 +72,11 @@ Response objects
 .. class:: Response([content=None, headers=None, status_code='200 OK',
 	default_content_header=True])
 
-The base response class. Constructor initializes the attributes with its
-given values. If ``default_content_header`` is true, the content type
-defined in ``pyroutes.settings.DEFAULT_CONTENT_TYPE`` will be added
-to the headers automatically.
+The base response class. Constructor initializes the attributes with its given
+values. If ``default_content_header`` is true, and ``Content-Type`` is not
+passed in headers, the content type defined in
+``pyroutes.settings.DEFAULT_CONTENT_TYPE`` will be added to the headers
+automatically.
 
 Attributes
 ^^^^^^^^^^
@@ -123,7 +124,31 @@ A redirect shortcut class for redirection responses. This class can make two typ
      1. Absolute path redirects: When you want do redirect to outside your application.
      2. Root App relative redirect: If you want your redirection relative to the root application path
 
-If Your application is deployed on http://server/apps/myapp, a Redirect("/some/path") 
+If Your application is deployed on http://server/apps/myapp, a Redirect("/some/path")
 actually will generate a redirect to "/apps/myapp/some/path".
 And a Redirect("/some/path", absolute_path=True) will return a redirect to "/some/path".
 
+HttpException objects
+---------------------
+
+.. class:: HttpException(location[, \*\*template_data])
+
+Base class for all exceptions that produce special error pages. If instances of
+objects that inherited from HttpException are raised, the
+ErrorHandlerMiddleware will render a page and return it with the correct HTTP
+code. The base template can be overriden using settings.CUSTOM_BASE_TEMPLATE
+and additional template data kan be passed to the exception. Raising a
+HttpException without passing a location as first parameter is allowed,
+location is then populated from the PATH_INFO variable.
+
+.. class:: Http403
+
+Template for this HttpException can be overridden using settings.TEMPLATE_403
+
+.. class:: Http404
+
+Template for this HttpException can be overridden using settings.TEMPLATE_404
+
+.. class:: Http500
+
+Template for this HttpException can be overridden using settings.TEMPLATE_500

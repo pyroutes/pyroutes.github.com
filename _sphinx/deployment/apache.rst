@@ -50,6 +50,6 @@ The ``WSGIDaemonProcess`` line is for developing behind apache by forcing
 production.  it will grind your page to a stop.
 
 If ``WSGIScriptAlias`` is set to a different path, e.g. ``/projects/wiki``,
-Redirect responses are made relative to this path.
+Redirect responses starting with a slash are made relative to this path.
 
 That should be about it, and your project should be running smoothly behind apache.

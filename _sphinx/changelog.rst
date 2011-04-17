@@ -5,7 +5,10 @@ Next release
 ------------
 
 - Implemented redirection relative to Application's root. See issue #1 on github: https://github.com/pyroutes/pyroutes/issues/1
-
+- Fixed argument defaults being overwritten. See issue #5 on github: https://github.com/pyroutes/pyroutes/issues/3
+- Altered logic for matching routes (stricter matching of argument count)
+- Code simplification on many minor details
+- Some minor regressions introduced by the middleware fixed
 
 Release 0.3.1
 -------------
@@ -19,7 +22,6 @@ Release 0.3.0
 - Added middleware support
 - New and improved documentation
 - Lots of cleanups on the code.
-
 
 Release 0.2.2
 -------------

@@ -23,19 +23,19 @@ This is the most basic example::
 
   from pyroutes import route
   from pyroutes.http.response import Response
-  
+
   @route('/')
   def index(request):
       return Response('Hello world!')
 
 Here we define that our index method should handle all requests to ``/``, and
-return the world famous «Hello world!» to the user. 
+return the world famous «Hello world!» to the user.
 
 We can add more routes::
 
   @route('/sayhello')
-  def sayhello(request):
-      return Response('Hello %s!' % request.GET.get('name', 'world'))
+  def sayhello(request, name='world'):
+      return Response('Hello %s!' % name))
 
 ... Easy as pie! Save these at the end of our ``handler.py`` file.
 
@@ -43,10 +43,8 @@ Route handling gotcha's
 ^^^^^^^^^^^^^^^^^^^^^^^
 
 After adding the two example routes, we have a handler for ``/`` and
-``/sayhello``. If you try to access ``/foo`` you will get an 404 exception,
-however if you go to ``/sayhello/foo`` your request will be passed to the
-``sayhello``-method! This is for enabling pretty urls. Pyroutes will always try
-to find the most matching handler, except on the root (``/``).
+``/sayhello``. If you try to access ``/foo`` you will get an 404 exception.
+However, accessing ``/sayhello/master`` does something quite different :)
 
 Starting the development server
 -------------------------------
@@ -70,9 +68,9 @@ the devserver using the ``fileserver`` route in ``pyroutes.utils``. Change the
 previous code to something like this::
 
     if __name__ == '__main__':
-        from import utils
+        from pyroutes import utils
         route('/media')(utils.fileserver)
-        devserver(application)
+        utils.devserver(application)
 
 This will now serve anything you have in the folder called ``media`` in your
 working directory in the ``/media`` path. This behaviour can be modified in
@@ -91,7 +89,7 @@ Your application should now be running on port 8001. Let's try it.::
 
     $ echo `wget -q -O - http://localhost:8001/`
     Hello world!
-    $ echo `wget -q -O - http://localhost:8001/sayhello?name=Pyroutes`
+    $ echo `wget -q -O - http://localhost:8001/sayhello/Pyroutes`
     Hello Pyroutes!
 
 
@@ -116,13 +114,13 @@ As of Pyroutes >= 0.3.0 using URLs as data for your handler really simple.
 Let's create an ``archive`` route as an example::
 
     @route('/archive')
-    def archive(request, year, month, day):
+    def archive(request, year, month=None, day=None):
         return Response('Year: %s  Month: %s  Day: %s' % (year, month, day))
 
 And let's try it::
 
     $ echo `wget -q -O - http://localhost:8001/archive`
-    Year: Month: Day:
+    (This returns Http404 because year is an obligatory parameter)
     $ echo `wget -q -O - http://localhost:8001/archive/2010`
     Year: 2010 Month: Day:
     $ echo `wget -q -O - http://localhost:8001/archive/2010/02`
@@ -130,11 +128,17 @@ And let's try it::
     $ echo `wget -q -O - http://localhost:8001/archive/2010/02/03`
     Year: 2010 Month: 02 Day: 03
     $ echo `wget -q -O - http://localhost:8001/archive/2010/02/03/foobar`
-    Year: 2010 Month: 02 Day: 03
+    (This returns a Http404 because archive only accepts four parameters)
 
-It's important to know that variables not available from the URL is passed to
-your method as an empty string or your defined default in the method
-declaration.
+This example should make the URL matching logic clear. Note: If a method
+accepts a referenced argument list in the from \*args, it will match any
+subpath of its route address.
+
+An example::
+
+    @route('/archive')
+    def archive(request, *args):
+        return Response('User requested /%s under archive' % '/'.join(args))
 
 Accessing request data
 ----------------------
@@ -143,20 +147,20 @@ One common operation in developing web applications is doing stuff with user
 data.  Pyroutes gives you easy access to the POST, GET and FILES posted to your
 request handler.
 
-::
+.. code-block:: python
 
     @route('/newpost')
     def new_post(request):
         if 'image' in request.FILES:
-	    # Do stuff with image
-	    filename = request.FILES['image'][0]
-	    data = request.FILES['image'][1].read()
-	    pass
-	category = request.GET.get('category','default')
-	title = request.POST.get('title', 'None')
-	if not title:
-	    return Response('no title!')
-	return Response('OK')
+        # Do stuff with image
+        filename = request.FILES['image'][0]
+        data = request.FILES['image'][1].read()
+        pass
+    category = request.GET.get('category','default')
+    title = request.POST.get('title', 'None')
+    if not title:
+        return Response('no title!')
+    return Response('OK')
 
 .. note:: If multiple fields have the same name, the value in the respective
           dicts are a list of the given values.
@@ -171,7 +175,7 @@ one of it's subclasses. The former defaults to sending a
 We have the follow built-in responses::
 
     Response(content=None, headers=None, status_code='200 OK',
-    	default_content_header=True)
+            default_content_header=True)
 
     Redirect(location)
 
@@ -179,9 +183,21 @@ content may be any string or iterable. This means you can do something like this
 
     @route('/pdf')
     def pdf(request):
-        return Response(open("mypdf.pdf"), [('Content-Type', 'application/pdf')],
-            default_content_header=False)
+        return Response(open("mypdf.pdf"), [('Content-Type', 'application/pdf')])
 
+Also available for convenience is the HttpException subclasses, also found
+under ``pyroutes.http.response``. An example (assuming a method ``decrypt``
+that can decrypt files by some algorithm)::
+
+    @route('/decrypt_file')
+    def decrypt(request, filename, key):
+        full_filename = os.path.join(secrets_folder, filename)
+        if not os.path.exits(full_filename):
+            raise Http404
+        try:
+            return Response(decrypt(full_filename, key))
+        except KeyError:
+            raise Http403
 
 C is for cookie..
 -----------------

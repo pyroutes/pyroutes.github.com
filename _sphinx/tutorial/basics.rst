@@ -18,19 +18,20 @@ The first thing we need is something to launch our application. We'll create a
 wsgi-file which can be used by `mod-wsgi`, but also include a basic webserver
 for testing our code without launching apache or another large webserver.
 
-Create a file called `server.wsgi`::
+Create a file called `server.wsgi`:
 
-    from wsgiref.simple_server import make_server
-    from pyroutes import application
+.. code-block:: python
+
+    from pyroutes import application, utils
 
     if __name__ == '__main__':
-        make_server('', 8080, application).serve_forever()
+        utils.devserver(application)
 
-You may now run this file as using python and it will launch our development
-server on your host on port 8080.  If your developing locally you can launch
-your browser and go to http://localhost:8080 and you'll get a 404-page
-complaining about no handler found. If you're developing on a server, replace
-localhost with the hostname or ip of the server.
+You may now run this file as a normal python file and it will launch our
+development server on your host on port 8001.  If your developing locally you
+can launch your browser and go to http://localhost:8001 and you'll get a
+404-page saying the page was not found. If you're developing on a server,
+replace localhost with the hostname or ip of the server.
 
 Note that the server will not reload itself as you develop more code, so you'll
 either have to restart the server each time you want to check your code, or
@@ -43,7 +44,9 @@ Hello world
 We can now start developing something to show to the user. Let's start by
 creating a simple Hello World-app.
 
-Create a file called hello.py::
+Create a file called hello.py:
+
+.. code-block:: python
 
     from pyroutes import route
     from pyroutes.http.response import Response
@@ -73,7 +76,7 @@ this intro tutorial). So we'll have to import our hello-script in
 imports.
 
 If you restart your development server and point your browser to
-http://localhost:8080/ you should see "Hello World" on your screen.
+http://localhost:8001/ you should see "Hello World" on your screen.
 
 Congratulation, you've just created your first pyroutes based web application!
 

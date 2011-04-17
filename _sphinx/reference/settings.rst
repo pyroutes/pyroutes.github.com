@@ -10,7 +10,7 @@ Pyroutes enables you to have per project settings by overriding
 The following settings are defined and can be overridden:
 
 .. attribute:: DEBUG
-   
+
    Enables debugging output on the ``500 Server Error``. Should
    not be true in production, as it might leak sensitive data.
 
@@ -40,13 +40,14 @@ The following settings are defined and can be overridden:
 .. attribute:: MIDDLEWARE
 
    A list of the enabled middlewares to be run, from outer to inner.
-   You should always append to this list if enabling more middleware,
-   as the defaults should always be there.
+   You most likely want to keep the default middleware classes if enabling more
+   middleware. Also, note that for the ErrorHandlerMiddleware to handle errors
+   it *must* be the last element of the list.
 
    You can read more about middleware here :ref:`middleware`.
 
-   **Default**: ``['pyroutes.middleware.errors.NotFoundMiddleware',
-   'pyroutes.middleware.errors.ErrorHandlerMiddleware',]``
+   **Default**: ``('pyroutes.middleware.errors.NotFoundMiddleware',
+   'pyroutes.middleware.errors.ErrorHandlerMiddleware',)``
 
 
 .. attribute:: SITE_ROOT
@@ -60,3 +61,21 @@ The following settings are defined and can be overridden:
    SITE_ROOT is set to '/bar' the redirect goes to /bar/foo/.
 
    **Default**: ``Detected automatically from environment``
+
+.. attribute:: CUSTOM_BASE_TEMPLATE
+
+   Used for custom HttpException base template.
+   See the default template for an example.
+   Defining only page templates and not the base template is allowed.
+
+.. attribute:: TEMPLATE_403 = './templates/403.xml'
+
+   Used for the rendering pages when a Http403 is raised.
+
+.. attribute:: TEMPLATE_404 = './templates/404.xml'
+
+   Used for the rendering pages when a Http404 is raised.
+
+.. attribute:: TEMPLATE_500 = './templates/500.xml'
+
+   Used for the rendering pages when a Http500 is raised.
