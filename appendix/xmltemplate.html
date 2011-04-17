@@ -157,13 +157,13 @@ for API usability in general, though.)</p>
 <span class="k">use</span> <span class="nn">XML::</span><span class="n">Template</span><span class="p">;</span>
 
 <span class="k">my</span> <span class="nv">$doc</span> <span class="o">=</span> <span class="nn">XML::Template::</span><span class="n">process_file</span><span class="p">(</span><span class="s">&#39;../xml/clone.xml&#39;</span><span class="p">,</span> <span class="p">{</span>
-      <span class="s">&#39;color&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;blue&#39;</span><span class="p">,</span>
-      <span class="s">&#39;#things&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-              <span class="p">{</span> <span class="s">&#39;li&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;Raindrops on roses&#39;</span> <span class="p">},</span>
-              <span class="p">{</span> <span class="s">&#39;li&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;Whiskers on kittens&#39;</span> <span class="p">},</span>
-              <span class="p">{</span> <span class="s">&#39;li&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;Bright copper kettles&#39;</span> <span class="p">},</span>
-              <span class="p">{</span> <span class="s">&#39;li&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;Warm, woolen mittens&#39;</span><span class="p">}</span>
-      <span class="p">]</span>
+    <span class="s">&#39;color&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;blue&#39;</span><span class="p">,</span>
+    <span class="s">&#39;#things&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="p">{</span> <span class="s">&#39;li&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;Raindrops on roses&#39;</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="s">&#39;li&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;Whiskers on kittens&#39;</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="s">&#39;li&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;Bright copper kettles&#39;</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="s">&#39;li&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;Warm, woolen mittens&#39;</span><span class="p">}</span>
+    <span class="p">]</span>
 <span class="p">});</span>
 <span class="k">print</span> <span class="nv">$doc</span><span class="o">-&gt;</span><span class="n">toString</span><span class="p">;</span>
 </pre></div>
@@ -240,13 +240,13 @@ we have a small hack:</p>
 <span class="k">use</span> <span class="nn">XML::</span><span class="n">Template</span><span class="p">;</span>
 
 <span class="k">my</span> <span class="nv">$doc</span> <span class="o">=</span> <span class="nn">XML::Template::</span><span class="n">process_file</span><span class="p">(</span><span class="s">&#39;../xml/clone.xml&#39;</span><span class="p">,</span> <span class="p">{</span>
-      <span class="s">&#39;color&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;red&#39;</span><span class="p">,</span>
-      <span class="s">&#39;#things&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-              <span class="p">{</span> <span class="s">&#39;li&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;Raindrops on roses&#39;</span><span class="p">,</span>    <span class="s">&#39;li/class&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;odd&#39;</span> <span class="p">},</span>
-              <span class="p">{</span> <span class="s">&#39;li&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;Whiskers on kittens&#39;</span><span class="p">,</span>   <span class="s">&#39;li/class&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;even&#39;</span> <span class="p">},</span>
-              <span class="p">{</span> <span class="s">&#39;li&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;Bright copper kettles&#39;</span><span class="p">,</span> <span class="s">&#39;li/class&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;odd&#39;</span> <span class="p">},</span>
-              <span class="p">{</span> <span class="s">&#39;li&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;Warm, woolen mittens&#39;</span><span class="p">,</span>  <span class="s">&#39;li/class&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;even&#39;</span> <span class="p">}</span>
-      <span class="p">]</span>
+    <span class="s">&#39;color&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;red&#39;</span><span class="p">,</span>
+    <span class="s">&#39;#things&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="p">{</span> <span class="s">&#39;li&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;Raindrops on roses&#39;</span><span class="p">,</span>    <span class="s">&#39;li/class&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;odd&#39;</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="s">&#39;li&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;Whiskers on kittens&#39;</span><span class="p">,</span>   <span class="s">&#39;li/class&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;even&#39;</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="s">&#39;li&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;Bright copper kettles&#39;</span><span class="p">,</span> <span class="s">&#39;li/class&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;odd&#39;</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="s">&#39;li&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;Warm, woolen mittens&#39;</span><span class="p">,</span>  <span class="s">&#39;li/class&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;even&#39;</span> <span class="p">}</span>
+    <span class="p">]</span>
 <span class="p">});</span>
 <span class="k">print</span> <span class="nv">$doc</span><span class="o">-&gt;</span><span class="n">toString</span><span class="p">;</span>
 </pre></div>
@@ -395,7 +395,7 @@ thing &#8211; I hope it will make your life on the web simpler. :-)</p>
     </div>
     <div class="footer">
         &copy; Copyright 2009-2010, Kristian Klette.
-      Last updated on Apr 14, 2011.
+      Last updated on Apr 17, 2011.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
     </div>
   </body>

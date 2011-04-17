@@ -68,21 +68,20 @@ See <a class="reference internal" href="reference/settings.html#pyroutes-setting
 <h2>Creating your own<a class="headerlink" href="#creating-your-own" title="Permalink to this headline">¶</a></h2>
 <p>Creating your own middleware is quite easy. Let&#8217;s create
 a simple logging middleware as an example.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">logging</span>
+<div class="highlight-python"><pre>import logging
 
-<span class="k">class</span> <span class="nc">LoggingMiddleware</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">passthrough</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">FileHandler</span><span class="p">(</span><span class="s">&#39;/tmp/mylog.txt&#39;</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">passthrough</span> <span class="o">=</span> <span class="n">passthrough</span>
+class LoggingMiddleware(object):
+    def __init__(self, passthrough):
+    self.logger = logging.getLogger()
+    self.logger.addHandler(logging.FileHandler('/tmp/mylog.txt'))
+    self.logger.setLevel(logging.DEBUG)
+    self.passthrough = passthrough
 
-    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;Got request </span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span>
-        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">passthrough</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;Got response </span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">response</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">response</span>
-</pre></div>
+def __call__(self, request):
+    self.logger.debug('Got request %s', request)
+    response = self.passthrough(request)
+    self.logger.debug('Got response %s', response)
+    return response</pre>
 </div>
 <p>So, what&#8217;s going on here?</p>
 <p>Every middleware must accept a <tt class="docutils literal"><span class="pre">passthrough</span></tt> parameter. This is the
@@ -156,7 +155,7 @@ as it&#8217;s parameter.</p>
     </div>
     <div class="footer">
         &copy; Copyright 2009-2010, Kristian Klette.
-      Last updated on Apr 14, 2011.
+      Last updated on Apr 17, 2011.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
     </div>
   </body>

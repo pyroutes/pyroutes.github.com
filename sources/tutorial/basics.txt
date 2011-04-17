@@ -160,7 +160,7 @@ content-template should use. The syntax is pretty simple
         '#message': 'foobar', # Replaces the content of the tag with t:id='message' with 'foobar'
         '#message/class': 'message', # Replaces or adds the class-attribute to the tag with t:id='message' to 'message'
         'msg': 'hello' # Replaces any <t:msg />-tag with 'hello' in the template.
-	 }
+    }
 
 One thing most people struggle with when starting to use xml-template is
 creating lists of things. Here is how to do that.
@@ -174,12 +174,12 @@ creating lists of things. Here is how to do that.
 .. code-block:: python
 
     data = {
-    	'#entries': [
-    	              {'#entry': 'entry 1'},
-    	              {'#entry': 'entry 2'},
-    	              {'#entry': 'entry 3'},
-    		    ]
-          }
+        '#entries': [
+            {'#entry': 'entry 1'},
+            {'#entry': 'entry 2'},
+            {'#entry': 'entry 3'},
+        ]
+    }
 
 For more xml-template examples see http://bzr.sesse.net/xml-template/.
 
@@ -198,10 +198,10 @@ Here is a simple example:
     @route('/sayhello')
     def sayhello(request):
         name = request.GET.get('name', None)
-	if name:
-	    return Response('Hello %s!' % name)
+        if name:
+            return Response('Hello %s!' % name)
         else:
-	    return Response('I don\'t know your name yet')
+            return Response('I don\'t know your name yet')
 
 
 That should get you started in your development of a pyroutes powered application. Good luck!

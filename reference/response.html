@@ -195,13 +195,31 @@ and is not tamper proof.</p>
 <p>A redirect shortcut class for redirection responses. This class can make two types of redirects:</p>
 <blockquote>
 <ol class="arabic simple">
-<li>Absolute path redirects: When you want do redirect to outside your application.</li>
-<li>Root App relative redirect: If you want your redirection relative to the root application path</li>
+<li>Absolute path redirects: When you want do redirect to outside your
+application.</li>
+<li>Root App relative redirect: If you want your redirection relative to
+the root application path.</li>
+<li>Site relative redirect: If you want your redirection relative to the
+base of the domain.</li>
+<li>Current URL relative redirect: If you want your redirection relative to
+the current URL value.</li>
 </ol>
 </blockquote>
-<p>If Your application is deployed on <a class="reference external" href="http://server/apps/myapp">http://server/apps/myapp</a>, a Redirect(&#8220;/some/path&#8221;)
-actually will generate a redirect to &#8220;/apps/myapp/some/path&#8221;.
-And a Redirect(&#8220;/some/path&#8221;, absolute_path=True) will return a redirect to &#8220;/some/path&#8221;.</p>
+<p>Example of these uses, assuming your app is installed on
+<tt class="docutils literal"><span class="pre">http://example.com/apps/myapp</span></tt>:</p>
+<blockquote>
+<ol class="arabic simple">
+<li><tt class="docutils literal"><span class="pre">Redirect('http://pyroutes.com/')</span></tt> for a redirect to pyroutes.com.</li>
+<li><tt class="docutils literal"><span class="pre">Redirect('/some/path')</span></tt> for a redirect to
+<tt class="docutils literal"><span class="pre">http://example.com/apps/myapp/some/path</span></tt>.  Ignores current URL.</li>
+<li><tt class="docutils literal"><span class="pre">Redirect('/other/path',</span> <span class="pre">absolute_path=True)</span></tt> to redirect to
+<tt class="docutils literal"><span class="pre">http://example.com/other/path</span></tt>. Ignores current URL.</li>
+<li><tt class="docutils literal"><span class="pre">Redirect('relative/path')</span></tt> to redirect to a path relative to the
+current URL of the user&#8217;s browser. E.g. if the user is visiting
+<tt class="docutils literal"><span class="pre">http://example.com/apps/myapp/foo/</span></tt> this redirect would go to
+<tt class="docutils literal"><span class="pre">http://example.com/apps/myapp/foo/relative/path</span></tt></li>
+</ol>
+</blockquote>
 </div>
 <div class="section" id="httpexception-objects">
 <h2>HttpException objects<a class="headerlink" href="#httpexception-objects" title="Permalink to this headline">¶</a></h2>
@@ -310,7 +328,7 @@ location is then populated from the PATH_INFO variable.</p>
     </div>
     <div class="footer">
         &copy; Copyright 2009-2010, Kristian Klette.
-      Last updated on Apr 16, 2011.
+      Last updated on Apr 17, 2011.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
     </div>
   </body>

@@ -5,7 +5,7 @@ Templates
 
 
 .. class:: TemplateRenderer([base_template=None, inclusion_param=None,
-	template_dir=None])
+        template_dir=None])
 
    Creates a TemplateRenderer for doing single-inheritance rendering
    with XML-Template.
