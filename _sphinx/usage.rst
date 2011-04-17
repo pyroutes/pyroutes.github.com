@@ -249,6 +249,6 @@ current task.::
 
     @route('/')
     def index(request):
-    	return Response(tmpl.render('index.xml', {}))
+        return Response(tmpl.render('index.xml', {}))
 
 For more information about XML-Template, see :ref:`xml_template_intro`.

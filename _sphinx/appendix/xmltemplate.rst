@@ -5,7 +5,7 @@ Introduction to XML::Template
 
 .. Note:: This is shamelessly ripped from http://bzr.sesse.net/xml-template/doc/intro.txt
           and converted to RST. The examples are in Perl, but the syntax is close to
-	  identical.
+          identical.
 
 XML::Template is a templating system; there are already many others, so if
 you do not like it, look into a different one (its design is inspired by
@@ -51,8 +51,8 @@ Code (simple.pl)
     use XML::Template;
 
     my $doc = XML::Template::process_file('../xml/simple.xml', {
-    	'title' => 'A very basic example',
-    	'#hello' => 'Hello world!'
+        'title' => 'A very basic example',
+        '#hello' => 'Hello world!'
     });
     print $doc->toString;
 
@@ -119,15 +119,15 @@ Code (clone.pl)
 
   #! /usr/bin/perl
   use XML::Template;
-  
+
   my $doc = XML::Template::process_file('../xml/clone.xml', {
-  	'color' => 'blue',
-  	'#things' => [
-  		{ 'li' => 'Raindrops on roses' },
-  		{ 'li' => 'Whiskers on kittens' },
-  		{ 'li' => 'Bright copper kettles' },
-  		{ 'li' => 'Warm, woolen mittens'} 
-  	]
+      'color' => 'blue',
+      '#things' => [
+          { 'li' => 'Raindrops on roses' },
+          { 'li' => 'Whiskers on kittens' },
+          { 'li' => 'Bright copper kettles' },
+          { 'li' => 'Warm, woolen mittens'}
+      ]
   });
   print $doc->toString;
 
@@ -146,11 +146,11 @@ Result
          All my favourite things:</p>
       <ul>
         <li>Raindrops on roses</li>
-      
+
         <li>Whiskers on kittens</li>
-      
+
         <li>Bright copper kettles</li>
-      
+
         <li>Warm, woolen mittens</li>
       </ul>
     </body>
@@ -216,13 +216,13 @@ Code (attribute.pl)
   use XML::Template;
 
   my $doc = XML::Template::process_file('../xml/clone.xml', {
-  	'color' => 'red',
-  	'#things' => [
-  		{ 'li' => 'Raindrops on roses',    'li/class' => 'odd' },
-  		{ 'li' => 'Whiskers on kittens',   'li/class' => 'even' },
-  		{ 'li' => 'Bright copper kettles', 'li/class' => 'odd' },
-  		{ 'li' => 'Warm, woolen mittens',  'li/class' => 'even' }
-  	]
+      'color' => 'red',
+      '#things' => [
+          { 'li' => 'Raindrops on roses',    'li/class' => 'odd' },
+          { 'li' => 'Whiskers on kittens',   'li/class' => 'even' },
+          { 'li' => 'Bright copper kettles', 'li/class' => 'odd' },
+          { 'li' => 'Warm, woolen mittens',  'li/class' => 'even' }
+      ]
   });
   print $doc->toString;
 
@@ -241,11 +241,11 @@ Result
          All my favourite things:</p>
       <ul>
         <li class="odd">Raindrops on roses</li>
-      
+
         <li class="even">Whiskers on kittens</li>
-      
+
         <li class="odd">Bright copper kettles</li>
-      
+
         <li class="even">Warm, woolen mittens</li>
       </ul>
     </body>

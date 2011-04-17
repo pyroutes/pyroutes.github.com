@@ -9,7 +9,7 @@ Overview
 
 All handlers and middleware receive an instance
 of the Request class and must return an instance
-of the Response class. 
+of the Response class.
 
 This document explains the APIs for :class:`Response`
 and :class:`Request`.
@@ -48,7 +48,7 @@ Attributes
    API.
 
    .. method:: get_cookie(key)
-      
+
       Return the value of a signed cookie, or None if it doesn't exist.
       Raises ``CookieHashInvalid`` or ``CookieHashMissing`` if the
       user has altered the cookies in any way.
@@ -60,7 +60,7 @@ Attributes
       Returns None if the cookie doesn't exist.
 
 .. attribute:: Request.ENV
-   
+
    The environment as passed from ``WSGI``.
 
 
@@ -70,7 +70,7 @@ Response objects
 ----------------
 
 .. class:: Response([content=None, headers=None, status_code='200 OK',
-	default_content_header=True])
+        default_content_header=True])
 
 The base response class. Constructor initializes the attributes with its given
 values. If ``default_content_header`` is true, and ``Content-Type`` is not
@@ -105,12 +105,12 @@ Attributes
       its value. Defaults to infinite lifetime.
 
    .. method:: add_unsigned_cookie(key, value[, expires=None])
-      
+
       Same functionality as ``add_cookie`` only the cookie will not be signed,
-      and is not tamper proof. 
+      and is not tamper proof.
 
    .. method:: del_cookie(key)
-      
+
       Deletes a cookie from the browser.
 
 
