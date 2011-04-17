@@ -78,6 +78,9 @@ passed in headers, the content type defined in
 ``pyroutes.settings.DEFAULT_CONTENT_TYPE`` will be added to the headers
 automatically.
 
+The status code can be passed as ``either`` a full status code ``or`` an
+integer corresponding to a standard code.
+
 Attributes
 ^^^^^^^^^^
 
