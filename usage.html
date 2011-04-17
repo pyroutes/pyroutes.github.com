@@ -77,19 +77,16 @@ Let&#8217;s call it <tt class="docutils literal"><span class="pre">handler.py</s
 <p>Here we define that our index method should handle all requests to <tt class="docutils literal"><span class="pre">/</span></tt>, and
 return the world famous «Hello world!» to the user.</p>
 <p>We can add more routes:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="nd">@route</span><span class="p">(</span><span class="s">&#39;/sayhello&#39;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">sayhello</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="s">&#39;Hello </span><span class="si">%s</span><span class="s">!&#39;</span> <span class="o">%</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="s">&#39;world&#39;</span><span class="p">))</span>
-</pre></div>
+<div class="highlight-python"><pre>@route('/sayhello')
+def sayhello(request, name='world'):
+    return Response('Hello %s!' % name))</pre>
 </div>
 <p>... Easy as pie! Save these at the end of our <tt class="docutils literal"><span class="pre">handler.py</span></tt> file.</p>
 <div class="section" id="route-handling-gotcha-s">
 <h3>Route handling gotcha&#8217;s<a class="headerlink" href="#route-handling-gotcha-s" title="Permalink to this headline">¶</a></h3>
 <p>After adding the two example routes, we have a handler for <tt class="docutils literal"><span class="pre">/</span></tt> and
-<tt class="docutils literal"><span class="pre">/sayhello</span></tt>. If you try to access <tt class="docutils literal"><span class="pre">/foo</span></tt> you will get an 404 exception,
-however if you go to <tt class="docutils literal"><span class="pre">/sayhello/foo</span></tt> your request will be passed to the
-<tt class="docutils literal"><span class="pre">sayhello</span></tt>-method! This is for enabling pretty urls. Pyroutes will always try
-to find the most matching handler, except on the root (<tt class="docutils literal"><span class="pre">/</span></tt>).</p>
+<tt class="docutils literal"><span class="pre">/sayhello</span></tt>. If you try to access <tt class="docutils literal"><span class="pre">/foo</span></tt> you will get an 404 exception.
+However, accessing <tt class="docutils literal"><span class="pre">/sayhello/master</span></tt> does something quite different :)</p>
 </div>
 </div>
 <div class="section" id="starting-the-development-server">
@@ -109,10 +106,11 @@ examples.:</p>
 static files when developing locally as well. You can serve static files through
 the devserver using the <tt class="docutils literal"><span class="pre">fileserver</span></tt> route in <tt class="docutils literal"><span class="pre">pyroutes.utils</span></tt>. Change the
 previous code to something like this:</p>
-<div class="highlight-python"><pre>if __name__ == '__main__':
-    from import utils
-    route('/media')(utils.fileserver)
-    devserver(application)</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">pyroutes</span> <span class="kn">import</span> <span class="n">utils</span>
+    <span class="n">route</span><span class="p">(</span><span class="s">&#39;/media&#39;</span><span class="p">)(</span><span class="n">utils</span><span class="o">.</span><span class="n">fileserver</span><span class="p">)</span>
+    <span class="n">utils</span><span class="o">.</span><span class="n">devserver</span><span class="p">(</span><span class="n">application</span><span class="p">)</span>
+</pre></div>
 </div>
 <p>This will now serve anything you have in the folder called <tt class="docutils literal"><span class="pre">media</span></tt> in your
 working directory in the <tt class="docutils literal"><span class="pre">/media</span></tt> path. This behaviour can be modified in
@@ -129,7 +127,7 @@ Starting server on 0.0.0.0 port 8001...</pre>
 <p>Your application should now be running on port 8001. Let&#8217;s try it.:</p>
 <div class="highlight-python"><pre>$ echo `wget -q -O - http://localhost:8001/`
 Hello world!
-$ echo `wget -q -O - http://localhost:8001/sayhello?name=Pyroutes`
+$ echo `wget -q -O - http://localhost:8001/sayhello/Pyroutes`
 Hello Pyroutes!</pre>
 </div>
 </div>
@@ -150,13 +148,13 @@ wrong if you enable pyroutes&#8217; debugging.</p>
 <p>As of Pyroutes &gt;= 0.3.0 using URLs as data for your handler really simple.
 Let&#8217;s create an <tt class="docutils literal"><span class="pre">archive</span></tt> route as an example:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="nd">@route</span><span class="p">(</span><span class="s">&#39;/archive&#39;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">archive</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">,</span> <span class="n">day</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">archive</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">day</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="s">&#39;Year: </span><span class="si">%s</span><span class="s">  Month: </span><span class="si">%s</span><span class="s">  Day: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">,</span> <span class="n">day</span><span class="p">))</span>
 </pre></div>
 </div>
 <p>And let&#8217;s try it:</p>
 <div class="highlight-python"><pre>$ echo `wget -q -O - http://localhost:8001/archive`
-Year: Month: Day:
+(This returns Http404 because year is an obligatory parameter)
 $ echo `wget -q -O - http://localhost:8001/archive/2010`
 Year: 2010 Month: Day:
 $ echo `wget -q -O - http://localhost:8001/archive/2010/02`
@@ -164,30 +162,35 @@ Year: 2010 Month: 02 Day:
 $ echo `wget -q -O - http://localhost:8001/archive/2010/02/03`
 Year: 2010 Month: 02 Day: 03
 $ echo `wget -q -O - http://localhost:8001/archive/2010/02/03/foobar`
-Year: 2010 Month: 02 Day: 03</pre>
+(This returns a Http404 because archive only accepts four parameters)</pre>
 </div>
-<p>It&#8217;s important to know that variables not available from the URL is passed to
-your method as an empty string or your defined default in the method
-declaration.</p>
+<p>This example should make the URL matching logic clear. Note: If a method
+accepts a referenced argument list in the from *args, it will match any
+subpath of its route address.</p>
+<p>An example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@route</span><span class="p">(</span><span class="s">&#39;/archive&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">archive</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="s">&#39;User requested /</span><span class="si">%s</span><span class="s"> under archive&#39;</span> <span class="o">%</span> <span class="s">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="accessing-request-data">
 <h2>Accessing request data<a class="headerlink" href="#accessing-request-data" title="Permalink to this headline">¶</a></h2>
 <p>One common operation in developing web applications is doing stuff with user
 data.  Pyroutes gives you easy access to the POST, GET and FILES posted to your
 request handler.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="nd">@route</span><span class="p">(</span><span class="s">&#39;/newpost&#39;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">new_post</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-    <span class="k">if</span> <span class="s">&#39;image&#39;</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">FILES</span><span class="p">:</span>
-        <span class="c"># Do stuff with image</span>
-        <span class="n">filename</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">FILES</span><span class="p">[</span><span class="s">&#39;image&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">FILES</span><span class="p">[</span><span class="s">&#39;image&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-        <span class="k">pass</span>
-    <span class="n">category</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;category&#39;</span><span class="p">,</span><span class="s">&#39;default&#39;</span><span class="p">)</span>
-    <span class="n">title</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;title&#39;</span><span class="p">,</span> <span class="s">&#39;None&#39;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">title</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="s">&#39;no title!&#39;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="s">&#39;OK&#39;</span><span class="p">)</span>
-</pre></div>
+<div class="highlight-python"><pre>@route('/newpost')
+def new_post(request):
+    if 'image' in request.FILES:
+    # Do stuff with image
+    filename = request.FILES['image'][0]
+    data = request.FILES['image'][1].read()
+    pass
+category = request.GET.get('category','default')
+title = request.POST.get('title', 'None')
+if not title:
+    return Response('no title!')
+return Response('OK')</pre>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -202,7 +205,7 @@ one of it&#8217;s subclasses. The former defaults to sending a
 <tt class="docutils literal"><span class="pre">text/html</span></tt>-response with status code <tt class="docutils literal"><span class="pre">200</span> <span class="pre">OK</span></tt>.</p>
 <p>We have the follow built-in responses:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">Response</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">status_code</span><span class="o">=</span><span class="s">&#39;200 OK&#39;</span><span class="p">,</span>
-    <span class="n">default_content_header</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">default_content_header</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 
 <span class="n">Redirect</span><span class="p">(</span><span class="n">location</span><span class="p">)</span>
 </pre></div>
@@ -210,8 +213,21 @@ one of it&#8217;s subclasses. The former defaults to sending a
 <p>content may be any string or iterable. This means you can do something like this:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="nd">@route</span><span class="p">(</span><span class="s">&#39;/pdf&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">pdf</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">&quot;mypdf.pdf&quot;</span><span class="p">),</span> <span class="p">[(</span><span class="s">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s">&#39;application/pdf&#39;</span><span class="p">)],</span>
-        <span class="n">default_content_header</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">&quot;mypdf.pdf&quot;</span><span class="p">),</span> <span class="p">[(</span><span class="s">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s">&#39;application/pdf&#39;</span><span class="p">)])</span>
+</pre></div>
+</div>
+<p>Also available for convenience is the HttpException subclasses, also found
+under <tt class="docutils literal"><span class="pre">pyroutes.http.response</span></tt>. An example (assuming a method <tt class="docutils literal"><span class="pre">decrypt</span></tt>
+that can decrypt files by some algorithm):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@route</span><span class="p">(</span><span class="s">&#39;/decrypt_file&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">decrypt</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+    <span class="n">full_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">secrets_folder</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exits</span><span class="p">(</span><span class="n">full_filename</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">Http404</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">decrypt</span><span class="p">(</span><span class="n">full_filename</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
+    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">Http403</span>
 </pre></div>
 </div>
 </div>
@@ -343,7 +359,7 @@ current task.:</p>
     </div>
     <div class="footer">
         &copy; Copyright 2009-2010, Kristian Klette.
-      Last updated on Apr 14, 2011.
+      Last updated on Apr 16, 2011.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
     </div>
   </body>

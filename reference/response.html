@@ -130,10 +130,11 @@ Returns None if the cookie doesn&#8217;t exist.</p>
 <tt class="descname">default_content_header=True])</tt></dt>
 <dd></dd></dl>
 
-<p>The base response class. Constructor initializes the attributes with its
-given values. If <tt class="docutils literal"><span class="pre">default_content_header</span></tt> is true, the content type
-defined in <tt class="docutils literal"><span class="pre">pyroutes.settings.DEFAULT_CONTENT_TYPE</span></tt> will be added
-to the headers automatically.</p>
+<p>The base response class. Constructor initializes the attributes with its given
+values. If <tt class="docutils literal"><span class="pre">default_content_header</span></tt> is true, and <tt class="docutils literal"><span class="pre">Content-Type</span></tt> is not
+passed in headers, the content type defined in
+<tt class="docutils literal"><span class="pre">pyroutes.settings.DEFAULT_CONTENT_TYPE</span></tt> will be added to the headers
+automatically.</p>
 <div class="section" id="id1">
 <h3>Attributes<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <dl class="attribute">
@@ -202,6 +203,39 @@ and is not tamper proof.</p>
 actually will generate a redirect to &#8220;/apps/myapp/some/path&#8221;.
 And a Redirect(&#8220;/some/path&#8221;, absolute_path=True) will return a redirect to &#8220;/some/path&#8221;.</p>
 </div>
+<div class="section" id="httpexception-objects">
+<h2>HttpException objects<a class="headerlink" href="#httpexception-objects" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyroutes.http.response.HttpException">
+<em class="property">class </em><tt class="descclassname">pyroutes.http.response.</tt><tt class="descname">HttpException</tt><big>(</big><em>location</em><span class="optional">[</span>, <em>**template_data</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyroutes.http.response.HttpException" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Base class for all exceptions that produce special error pages. If instances of
+objects that inherited from HttpException are raised, the
+ErrorHandlerMiddleware will render a page and return it with the correct HTTP
+code. The base template can be overriden using settings.CUSTOM_BASE_TEMPLATE
+and additional template data kan be passed to the exception. Raising a
+HttpException without passing a location as first parameter is allowed,
+location is then populated from the PATH_INFO variable.</p>
+<dl class="class">
+<dt id="pyroutes.http.response.Http403">
+<em class="property">class </em><tt class="descclassname">pyroutes.http.response.</tt><tt class="descname">Http403</tt><a class="headerlink" href="#pyroutes.http.response.Http403" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Template for this HttpException can be overridden using settings.TEMPLATE_403</p>
+<dl class="class">
+<dt id="pyroutes.http.response.Http404">
+<em class="property">class </em><tt class="descclassname">pyroutes.http.response.</tt><tt class="descname">Http404</tt><a class="headerlink" href="#pyroutes.http.response.Http404" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Template for this HttpException can be overridden using settings.TEMPLATE_404</p>
+<dl class="class">
+<dt id="pyroutes.http.response.Http500">
+<em class="property">class </em><tt class="descclassname">pyroutes.http.response.</tt><tt class="descname">Http500</tt><a class="headerlink" href="#pyroutes.http.response.Http500" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Template for this HttpException can be overridden using settings.TEMPLATE_500</p>
+</div>
 </div>
 
 
@@ -223,6 +257,7 @@ And a Redirect(&#8220;/some/path&#8221;, absolute_path=True) will return a redir
 </ul>
 </li>
 <li><a class="reference internal" href="#redirect-objects">Redirect objects</a></li>
+<li><a class="reference internal" href="#httpexception-objects">HttpException objects</a></li>
 </ul>
 </li>
 </ul>
@@ -275,7 +310,7 @@ And a Redirect(&#8220;/some/path&#8221;, absolute_path=True) will return a redir
     </div>
     <div class="footer">
         &copy; Copyright 2009-2010, Kristian Klette.
-      Last updated on Apr 14, 2011.
+      Last updated on Apr 16, 2011.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
     </div>
   </body>

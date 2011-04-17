@@ -56,18 +56,17 @@ cd tutorial</pre>
 wsgi-file which can be used by <cite>mod-wsgi</cite>, but also include a basic webserver
 for testing our code without launching apache or another large webserver.</p>
 <p>Create a file called <cite>server.wsgi</cite>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">wsgiref.simple_server</span> <span class="kn">import</span> <span class="n">make_server</span>
-<span class="kn">from</span> <span class="nn">pyroutes</span> <span class="kn">import</span> <span class="n">application</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pyroutes</span> <span class="kn">import</span> <span class="n">application</span><span class="p">,</span> <span class="n">utils</span>
 
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">make_server</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="mi">8080</span><span class="p">,</span> <span class="n">application</span><span class="p">)</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
+    <span class="n">utils</span><span class="o">.</span><span class="n">devserver</span><span class="p">(</span><span class="n">application</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>You may now run this file as using python and it will launch our development
-server on your host on port 8080.  If your developing locally you can launch
-your browser and go to <a class="reference external" href="http://localhost:8080">http://localhost:8080</a> and you&#8217;ll get a 404-page
-complaining about no handler found. If you&#8217;re developing on a server, replace
-localhost with the hostname or ip of the server.</p>
+<p>You may now run this file as a normal python file and it will launch our
+development server on your host on port 8001.  If your developing locally you
+can launch your browser and go to <a class="reference external" href="http://localhost:8001">http://localhost:8001</a> and you&#8217;ll get a
+404-page saying the page was not found. If you&#8217;re developing on a server,
+replace localhost with the hostname or ip of the server.</p>
 <p>Note that the server will not reload itself as you develop more code, so you&#8217;ll
 either have to restart the server each time you want to check your code, or
 deploy your application behind apache. See <a class="reference internal" href="../deployment/apache.html#deployment-apache"><em>Deploying pyroutes with Apache2.2</em></a> for
@@ -104,7 +103,7 @@ this intro tutorial). So we&#8217;ll have to import our hello-script in
 <cite>server.wsgi</cite>. We do this simply by adding <cite>import hello</cite> below our other
 imports.</p>
 <p>If you restart your development server and point your browser to
-<a class="reference external" href="http://localhost:8080/">http://localhost:8080/</a> you should see &#8220;Hello World&#8221; on your screen.</p>
+<a class="reference external" href="http://localhost:8001/">http://localhost:8001/</a> you should see &#8220;Hello World&#8221; on your screen.</p>
 <p>Congratulation, you&#8217;ve just created your first pyroutes based web application!</p>
 </div>
 <div class="section" id="templating">
@@ -266,7 +265,7 @@ the values from the user.</p>
     </div>
     <div class="footer">
         &copy; Copyright 2009-2010, Kristian Klette.
-      Last updated on Apr 14, 2011.
+      Last updated on Apr 16, 2011.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
     </div>
   </body>

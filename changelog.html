@@ -52,6 +52,10 @@
 <h2>Next release<a class="headerlink" href="#next-release" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li>Implemented redirection relative to Application&#8217;s root. See issue #1 on github: <a class="reference external" href="https://github.com/pyroutes/pyroutes/issues/1">https://github.com/pyroutes/pyroutes/issues/1</a></li>
+<li>Fixed argument defaults being overwritten. See issue #5 on github: <a class="reference external" href="https://github.com/pyroutes/pyroutes/issues/3">https://github.com/pyroutes/pyroutes/issues/3</a></li>
+<li>Altered logic for matching routes (stricter matching of argument count)</li>
+<li>Code simplification on many minor details</li>
+<li>Some minor regressions introduced by the middleware fixed</li>
 </ul>
 </div>
 <div class="section" id="release-0-3-1">
@@ -162,7 +166,7 @@ would cause the default 404,403 and 400 error pages to not work.</li>
     </div>
     <div class="footer">
         &copy; Copyright 2009-2010, Kristian Klette.
-      Last updated on Apr 14, 2011.
+      Last updated on Apr 16, 2011.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
     </div>
   </body>

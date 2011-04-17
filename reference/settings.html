@@ -91,11 +91,12 @@ working directory.</p>
 <dt id="MIDDLEWARE">
 <tt class="descname">MIDDLEWARE</tt><a class="headerlink" href="#MIDDLEWARE" title="Permalink to this definition">¶</a></dt>
 <dd><p>A list of the enabled middlewares to be run, from outer to inner.
-You should always append to this list if enabling more middleware,
-as the defaults should always be there.</p>
+You most likely want to keep the default middleware classes if enabling more
+middleware. Also, note that for the ErrorHandlerMiddleware to handle errors
+it <em>must</em> be the last element of the list.</p>
 <p>You can read more about middleware here <a class="reference internal" href="../middleware.html#middleware"><em>Middleware</em></a>.</p>
-<p><strong>Default</strong>: <tt class="docutils literal"><span class="pre">['pyroutes.middleware.errors.NotFoundMiddleware',</span>
-<span class="pre">'pyroutes.middleware.errors.ErrorHandlerMiddleware',]</span></tt></p>
+<p><strong>Default</strong>: <tt class="docutils literal"><span class="pre">('pyroutes.middleware.errors.NotFoundMiddleware',</span>
+<span class="pre">'pyroutes.middleware.errors.ErrorHandlerMiddleware',)</span></tt></p>
 </dd></dl>
 
 <dl class="attribute">
@@ -108,6 +109,32 @@ default a Redirect(&#8216;/foo&#8217;) will go to /pyroutes/demo/foo/. If the SI
 variable is set to the empty string, the redirect goes to /foo/ and if
 SITE_ROOT is set to &#8216;/bar&#8217; the redirect goes to /bar/foo/.</p>
 <p><strong>Default</strong>: <tt class="docutils literal"><span class="pre">Detected</span> <span class="pre">automatically</span> <span class="pre">from</span> <span class="pre">environment</span></tt></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="CUSTOM_BASE_TEMPLATE">
+<tt class="descname">CUSTOM_BASE_TEMPLATE</tt><a class="headerlink" href="#CUSTOM_BASE_TEMPLATE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used for custom HttpException base template.
+See the default template for an example.
+Defining only page templates and not the base template is allowed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">TEMPLATE_403 = './templates/403.xml'</tt></dt>
+<dd><p>Used for the rendering pages when a Http403 is raised.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">TEMPLATE_404 = './templates/404.xml'</tt></dt>
+<dd><p>Used for the rendering pages when a Http404 is raised.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">TEMPLATE_500 = './templates/500.xml'</tt></dt>
+<dd><p>Used for the rendering pages when a Http500 is raised.</p>
 </dd></dl>
 
 </div>
@@ -166,7 +193,7 @@ SITE_ROOT is set to &#8216;/bar&#8217; the redirect goes to /bar/foo/.</p>
     </div>
     <div class="footer">
         &copy; Copyright 2009-2010, Kristian Klette.
-      Last updated on Apr 14, 2011.
+      Last updated on Apr 16, 2011.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
     </div>
   </body>

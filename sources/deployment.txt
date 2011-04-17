@@ -47,4 +47,7 @@ be handled by that python file. When using ``pyroutes`` this is the file where y
 
 and import all files and modules declaring routes.
 
+If ``WSGIScriptAlias`` is set to a different path, e.g. ``/projects/wiki``,
+Redirect responses starting with a slash are made relative to this path.
+
 That should be about it, and your project should be running smoothly behind apache.
