@@ -1,8 +1,8 @@
 Changelog
 =========
 
-Next release
-------------
+Release 0.4.0
+-------------
 
 - Implemented redirection relative to Application's root. See issue #1 on github: https://github.com/pyroutes/pyroutes/issues/1
 - Fixed argument defaults being overwritten. See issue #5 on github: https://github.com/pyroutes/pyroutes/issues/3
