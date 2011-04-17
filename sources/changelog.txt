@@ -1,6 +1,14 @@
 Changelog
 =========
 
+Release 0.4.1
+-------------
+
+- Rename ``find_request_handler`` to ``find_route``.
+- Rename some internal variables, notably all references to ``handler`` that
+  were actually a ``Route`` instance have been renamed to route.
+- Minor fixes.
+
 Release 0.4.0
 -------------
 
