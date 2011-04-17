@@ -121,13 +121,27 @@ Redirect objects
 
 A redirect shortcut class for redirection responses. This class can make two types of redirects:
 
-     1. Absolute path redirects: When you want do redirect to outside your application.
-     2. Root App relative redirect: If you want your redirection relative to the root application path
-     3. Current URL relative redirect: If you want your redirection relative to the current URL value
+     1. Absolute path redirects: When you want do redirect to outside your
+        application.
+     2. Root App relative redirect: If you want your redirection relative to
+        the root application path.
+     3. Site relative redirect: If you want your redirection relative to the
+        base of the domain.
+     4. Current URL relative redirect: If you want your redirection relative to
+        the current URL value.
 
-If your application is deployed on http://server/apps/myapp, a Redirect("/some/path") 
-actually will generate a redirect to "/apps/myapp/some/path".
-And a Redirect("/some/path", absolute_path=True) will return a redirect to "/some/path". Similar to this, if you want to redirect relative to the current URL value, you should return Redirect("some/path").
+Example of these uses, assuming your app is installed on
+``http://example.com/apps/myapp``:
+
+     1. ``Redirect('http://pyroutes.com/')`` for a redirect to pyroutes.com.
+     2. ``Redirect('/some/path')`` for a redirect to
+        ``http://example.com/apps/myapp/some/path``.  Ignores current URL.
+     3. ``Redirect('/other/path', absolute_path=True)`` to redirect to
+        ``http://example.com/other/path``. Ignores current URL.
+     4. ``Redirect('relative/path')`` to redirect to a path relative to the
+        current URL of the user's browser. E.g. if the user is visiting
+        ``http://example.com/apps/myapp/foo/`` this redirect would go to
+        ``http://example.com/apps/myapp/foo/relative/path``
 
 
 HttpException objects
